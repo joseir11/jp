@@ -171,3 +171,9 @@ body{ text-transform:uppercase; }
  .landing-line{width:25px}
  .landing-menu-button{right:22px;bottom:26px;padding:15px 18px;font-size:11px}
 }
+
+
+/* MAIS RESPIRO NO BANNER DO CARDÁPIO */
+.welcome{min-height:220px;padding-bottom:43px}
+.welcome-copy p{margin-top:15px;line-height:1.7}
+.welcome-bottom{bottom:17px}
