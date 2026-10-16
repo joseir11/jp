@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>Administração | JP BURGUER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/responsive.css">
+  <link rel="stylesheet" href="./assets/css/admin.css">
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a class="brand" href="./index.html"><span class="brand-mark">JP<span>.</span></span><span class="brand-name">BURGUER</span></a>
+      <div class="admin-header-right"><span class="admin-tag">PAINEL ADMINISTRATIVO</span><button id="logoutButton" class="admin-logout" hidden>Sair</button></div>
+    </header>
+
+    <section id="loginPanel" class="admin-login">
+      <span class="section-kicker">ACESSO RESTRITO</span>
+      <h1>Gerenciar<br>cardápio<span>.</span></h1>
+      <p>Entre com seu usuário administrador para editar os produtos.</p>
+      <form id="loginForm">
+        <label for="adminEmail">E-MAIL</label>
+        <input id="adminEmail" type="email" autocomplete="username" required placeholder="Seu e-mail">
+        <label for="adminPassword">SENHA</label>
+        <input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Sua senha">
+        <button class="admin-primary" type="submit">ENTRAR <span>→</span></button>
+      </form>
+      <div id="loginMessage" class="admin-message" role="status"></div>
+    </section>
+
+    <section id="dashboard" class="admin-dashboard" hidden>
+      <div class="admin-title-row"><div><span class="section-kicker">JP BURGUER</span><h1>Seus produtos<span>.</span></h1><p>Cadastre e atualize os itens que aparecem no cardápio.</p></div><a class="view-menu-link" href="./index.html" target="_blank">Ver cardápio ↗</a></div>
+      <div class="admin-tabs"><button class="admin-tab active" data-tab="products">Produtos</button><button class="admin-tab" data-tab="categories">Categorias</button></div>
+
+      <section id="productsPanel" class="admin-panel">
+        <div class="admin-panel-heading"><h2>Produtos cadastrados</h2><button id="newProductButton" class="admin-primary compact">+ NOVO PRODUTO</button></div>
+        <div id="productList" class="admin-product-list"></div>
+      </section>
+
+      <section id="categoriesPanel" class="admin-panel" hidden>
+        <div class="admin-panel-heading"><h2>Categorias</h2></div>
+        <form id="categoryForm" class="admin-category-form"><input id="categoryName" required maxlength="40" placeholder="Nome da nova categoria"><button class="admin-primary compact" type="submit">ADICIONAR</button></form>
+        <div id="categoryList" class="admin-category-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="productModal" class="admin-modal" hidden>
+    <div class="admin-modal-card">
+      <button id="closeProductModal" class="close-button admin-modal-close" type="button">×</button>
+      <span class="section-kicker">CADASTRO</span><h2 id="productModalTitle">Novo produto<span>.</span></h2>
+      <form id="productForm">
+        <input id="productId" type="hidden">
+        <label for="productName">NOME DO PRODUTO</label><input id="productName" required maxlength="70" placeholder="Ex.: JP BACON">
+        <label for="productDescription">DESCRIÇÃO</label><textarea id="productDescription" maxlength="250" placeholder="Ingredientes e detalhes"></textarea>
+        <div class="admin-form-row"><div><label for="productPrice">PREÇO (R$)</label><input id="productPrice" type="number" min="0" step="0.01" required placeholder="29,90"></div><div><label for="productCategory">CATEGORIA</label><select id="productCategory" required></select></div></div>
+        <label for="productLabel">ETIQUETA <small>OPCIONAL</small></label><input id="productLabel" maxlength="30" placeholder="Ex.: MAIS PEDIDO">
+        <label for="productImage">FOTO DO PRODUTO</label><input id="productImage" type="file" accept="image/*">
+        <div id="imagePreview" class="admin-image-preview"></div>
+        <label class="admin-check"><input id="productActive" type="checkbox" checked> Produto visível no cardápio</label>
+        <button class="admin-primary" type="submit" id="saveProductButton">SALVAR PRODUTO <span>→</span></button>
+      </form>
+      <div id="productMessage" class="admin-message" role="status"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./assets/js/supabase.js"></script>
+  <script src="./assets/js/admin.js"></script>
+</body>
+</html>
