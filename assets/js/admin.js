@@ -74,7 +74,7 @@ $("refreshOrdersButton").addEventListener("click",loadOrders);
 async function loadOrders(){
   message("ordersMessage","Buscando pedidos...",false);
   const {data,error}=await db.from("orders")
-    .select("id,customer_name,notes,status,total,created_at,order_items(id,product_name,unit_price,quantity,subtotal)")
+    .select("id,order_number,customer_name,notes,status,total,created_at,order_items(id,product_name,unit_price,quantity,subtotal)")
     .order("created_at",{ascending:false});
   if(error){
     message("ordersMessage","Não foi possível carregar os pedidos: "+error.message);
@@ -101,7 +101,7 @@ function renderOrders(){
           <div><span class="admin-order-date">${safe(date)}</span><h3>${safe(order.customer_name)}</h3></div>
           <strong class="admin-order-total">${money(order.total)}</strong>
         </div>
-        <div class="admin-order-id">PEDIDO #${safe(order.id.slice(0,8).toUpperCase())}</div>
+        <div class="admin-order-id">PEDIDO #${String(order.order_number ?? "").padStart(3,"0")}</div>
         <div class="admin-order-items">
           ${items.map(item=>`<div class="admin-order-item"><span><b>${Number(item.quantity)}×</b> ${safe(item.product_name)}</span><strong>${money(item.subtotal)}</strong></div>`).join("")}
         </div>
