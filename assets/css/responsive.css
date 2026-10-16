@@ -15,3 +15,7 @@
 @media(min-width:521px){
   .app-shell{box-shadow:0 0 45px #0000000a}
 }
+
+@media(min-width:521px){
+  .menu-app{max-width:520px}
+}
