@@ -111,10 +111,30 @@ function renderOrders(){
           <select id="status-${order.id}" data-order-status="${order.id}">
             ${orderStatuses.map(s=>`<option value="${s}" ${s===status?"selected":""}>${s}</option>`).join("")}
           </select>
+          <button class="admin-delete-order" type="button" data-delete-order="${order.id}">EXCLUIR PEDIDO</button>
         </div>
       </article>`;
   }).join("");
 }
+$("ordersList").addEventListener("click",async event=>{
+  const button=event.target.closest("[data-delete-order]");
+  if(!button)return;
+  const order=orders.find(item=>item.id===button.dataset.deleteOrder);
+  if(!order)return;
+  const number=String(order.order_number??"").padStart(3,"0");
+  if(!confirm(`Excluir definitivamente o pedido #${number} de ${order.customer_name}? Os itens também serão excluídos e essa ação não poderá ser desfeita.`))return;
+  button.disabled=true;
+  button.textContent="EXCLUINDO...";
+  const {error}=await db.rpc("admin_delete_order",{p_order_id:order.id});
+  if(error){
+    alert("Não foi possível excluir o pedido: "+error.message);
+    button.disabled=false;
+    button.textContent="EXCLUIR PEDIDO";
+    return;
+  }
+  knownOrderIds.delete(order.id);
+  await loadOrders();
+});
 $("ordersList").addEventListener("change",async event=>{
   const select=event.target.closest("[data-order-status]");
   if(!select)return;
@@ -144,6 +164,7 @@ function subscribeToOrders(){
       loadOrders();
     })
     .on("postgres_changes",{event:"UPDATE",schema:"public",table:"orders"},()=>loadOrders())
+    .on("postgres_changes",{event:"DELETE",schema:"public",table:"orders"},()=>loadOrders())
     .subscribe(status=>{
       if(status==="SUBSCRIBED")message("ordersMessage","Pedidos conectados em tempo real.",false);
       if(status==="CHANNEL_ERROR"||status==="TIMED_OUT")message("ordersMessage","Tempo real indisponível. Use ATUALIZAR para consultar os pedidos.");
