@@ -1,91 +1,20 @@
-/* =========================================
-   RESPONSIVIDADE JP BURGUER
-   PROJETO PRIORIZADO PARA CELULAR
-========================================= */
-
-
-/* TELAS MUITO PEQUENAS */
-
-@media (max-width: 360px) {
-
-  .cover-screen h1 {
-    font-size: 59px;
-  }
-
-  .cover-enter {
-    gap: 9px;
-    font-size: 8px;
-  }
-
-  .section-heading h2 {
-    font-size: 39px;
-  }
-
-  .product-info {
-    padding: 16px;
-  }
-
-  .product-info h3 {
-    font-size: 26px;
-  }
-
-  .add-button {
-    padding: 11px 12px;
-    font-size: 9px;
-  }
-
+/* Layout pensado primeiro para celulares */
+@media(max-width:360px){
+  .menu-section{padding-left:10px;padding-right:10px}
+  .product-grid{gap:9px}
+  .product-info{padding:8px}
+  .product-info h3{font-size:19px}
+  .product-info p{font-size:8px;min-height:48px}
+  .product-price{font-size:14px}
+  .add-button{font-size:8px;padding:9px 3px}
+  .menu-intro h1{font-size:32px}
 }
-
-
-/* CELULARES COM ALTURA REDUZIDA */
-
-@media (max-height: 700px) {
-
-  .cover-brand {
-    top: 22px;
-  }
-
-  .cover-brand > span {
-    font-size: 48px;
-  }
-
-  .cover-screen .hero-content {
-    padding-top: 20px;
-    padding-bottom: 65px;
-  }
-
-  .cover-screen h1 {
-    font-size: 62px;
-    margin: 15px 0;
-  }
-
-  .cover-screen .hero-content > p {
-    margin-top: 10px;
-    font-size: 11px;
-  }
-
-  .cover-enter {
-    bottom: 55px;
-  }
-
-  .cover-bottom {
-    bottom: 17px;
-  }
-
+@media(min-width:431px){
+  body{box-shadow:0 0 50px rgba(0,0,0,.4)}
 }
-
-
-/* VISUALIZAÇÃO EM COMPUTADORES */
-
-@media (min-width: 431px) {
-
-  body {
-    max-width: 430px;
-
-    margin-left: auto;
-    margin-right: auto;
-
-    box-shadow: 0 0 50px rgba(0,0,0,.4);
-  }
-
+@media(max-height:650px){
+  .cover-screen{min-height:500px}
+  .cover-brand{top:20px}
+  .cover-brand strong{font-size:55px}
+  .cover-enter{bottom:18px}
 }
