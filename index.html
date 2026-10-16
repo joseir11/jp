@@ -3,80 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#171717">
+  <meta name="theme-color" content="#ffffff">
   <title>JP BURGUER | Cardápio</title>
-  <meta name="description" content="Confira o cardápio JP BURGUER e faça seu pedido.">
+  <meta name="description" content="Escolha seu burger favorito e faça seu pedido no JP BURGUER.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/responsive.css">
 </head>
 <body>
-  <main>
-    <section class="cover-screen" id="inicio" aria-label="JP Burguer">
-      <div class="cover-shade"></div>
-      <div class="cover-brand"><strong>JP<span>.</span></strong><small>BURGUER</small></div>
-      <a class="cover-enter" href="#cardapio"><span>VER CARDÁPIO</span><b>↗</b></a>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#topo" aria-label="JP Burguer início">
+        <span class="brand-mark">JP<span>.</span></span>
+        <span class="brand-name">BURGUER</span>
+      </a>
+      <div class="topbar-note"><span class="status-dot"></span> CARDÁPIO DIGITAL</div>
+      <button class="top-cart" id="openCart" aria-label="Abrir sacola">
+        <span class="bag-icon">▢</span><span class="top-cart-count" id="cartCount">0</span>
+      </button>
+    </header>
+
+    <section class="welcome" id="topo">
+      <div class="welcome-copy">
+        <span class="welcome-kicker">BEM-VINDO AO JP</span>
+        <h1>Hoje merece<br>um burger <span>de verdade.</span></h1>
+        <p>Escolha seus favoritos e monte seu pedido.</p>
+      </div>
+      <div class="welcome-art" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=85" alt="">
+        <span>JP<br>BURGER</span>
+      </div>
+      <div class="welcome-bottom"><span>FEITO NA HORA</span><i></i><span>FEITO PRA VOCÊ</span></div>
     </section>
 
     <section class="menu-section" id="cardapio">
-      <header class="menu-header">
-        <a class="menu-brand" href="#inicio">JP<span>.</span><small>BURGUER</small></a>
-        <button class="cart-button" id="openCart" aria-label="Abrir meu pedido">
-          <span>MEU PEDIDO</span><span class="cart-icon">🛒</span><span class="cart-count" id="cartCount">0</span>
-        </button>
-      </header>
-
-      <div class="menu-intro">
-        <span class="eyebrow">FEITO NA HORA. FEITO PRA VOCÊ.</span>
-        <h1>ESCOLHA O SEU <span>JP.</span></h1>
+      <div class="section-title">
+        <div><span class="section-kicker">ESCOLHA E APROVEITE</span><h2>Nosso cardápio<span>.</span></h2></div>
+        <span class="item-hint">TOQUE PARA ADICIONAR</span>
       </div>
 
       <nav class="category-list" id="categories" aria-label="Categorias do cardápio">
-        <button class="category active" data-category="todos">TODOS</button>
-        <button class="category" data-category="classicos">CLÁSSICOS</button>
-        <button class="category" data-category="especiais">ESPECIAIS</button>
-        <button class="category" data-category="acompanhamentos">ACOMPANHAMENTOS</button>
-        <button class="category" data-category="bebidas">BEBIDAS</button>
+        <button class="category active" data-category="todos">Todos</button>
+        <button class="category" data-category="classicos">Clássicos</button>
+        <button class="category" data-category="especiais">Especiais</button>
+        <button class="category" data-category="acompanhamentos">Acompanhamentos</button>
+        <button class="category" data-category="bebidas">Bebidas</button>
       </nav>
 
       <div class="product-grid" id="productGrid"></div>
-      <div class="menu-end">JP BURGUER <span>•</span> BOM APETITE!</div>
     </section>
+
+    <footer class="app-footer">
+      <span class="footer-logo">JP<span>.</span></span>
+      <span>Obrigado por escolher o JP BURGUER.</span>
+    </footer>
   </main>
 
-  <button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido">
-    <span>VER MEU PEDIDO</span><span class="floating-cart-count" id="floatingCartCount">0</span><strong id="floatingCartTotal">R$ 0,00</strong>
+  <button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido" hidden>
+    <span class="floating-cart-icon">▢</span>
+    <span class="floating-cart-label">Ver meu pedido <small id="floatingCartCount">0 itens</small></span>
+    <strong id="floatingCartTotal">R$ 0,00</strong>
+    <span class="floating-cart-arrow">→</span>
   </button>
 
   <div class="modal-overlay" id="cartOverlay"></div>
-  <aside class="cart-drawer" id="cartDrawer">
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Meu pedido">
     <div class="drawer-header">
-      <div><span class="eyebrow">SEU PEDIDO</span><h2>MEU CARRINHO<span>.</span></h2></div>
-      <button class="close-button" id="closeCart" aria-label="Fechar carrinho">✕</button>
+      <div><span class="drawer-kicker">SUA SELEÇÃO</span><h2>Meu pedido<span>.</span></h2></div>
+      <button class="close-button" id="closeCart" aria-label="Fechar carrinho">×</button>
     </div>
     <div class="cart-items" id="cartItems">
-      <div class="empty-cart"><span>🛒</span><p>Seu carrinho está vazio.</p><small>Escolha algo delicioso no cardápio.</small></div>
+      <div class="empty-cart"><span class="empty-bag">▢</span><p>Sua sacola está vazia.</p><small>Adicione seus favoritos para começar.</small></div>
     </div>
     <div class="cart-footer">
-      <div class="cart-total"><span>TOTAL DO PEDIDO</span><strong id="cartTotal">R$ 0,00</strong></div>
-      <button class="checkout-button" id="checkoutButton" disabled>CONTINUAR PEDIDO <span>→</span></button>
+      <div class="cart-total"><span>Total do pedido</span><strong id="cartTotal">R$ 0,00</strong></div>
+      <button class="checkout-button" id="checkoutButton" disabled>CONTINUAR <span>→</span></button>
     </div>
   </aside>
 
   <div class="checkout-overlay" id="checkoutOverlay">
     <div class="checkout-modal">
-      <button class="close-button checkout-close" id="closeCheckout" aria-label="Fechar">✕</button>
-      <span class="eyebrow">IDENTIFICAÇÃO</span>
-      <h2>QUEM VAI <span>RECEBER?</span></h2>
-      <p>Informe seu nome para identificarmos seu pedido.</p>
+      <button class="close-button checkout-close" id="closeCheckout" aria-label="Fechar">×</button>
+      <span class="drawer-kicker">SÓ MAIS UM PASSO</span>
+      <h2>Quem está pedindo<span>?</span></h2>
+      <p>Digite seu nome para identificarmos seu pedido.</p>
       <form id="checkoutForm">
         <label for="customerName">SEU NOME</label>
-        <input type="text" id="customerName" placeholder="Digite seu nome" maxlength="50" required>
-        <label for="orderNote">OBSERVAÇÕES (OPCIONAL)</label>
-        <textarea id="orderNote" placeholder="Alguma observação?" maxlength="300"></textarea>
-        <button type="submit" class="checkout-button">CONFIRMAR PEDIDO →</button>
+        <input type="text" id="customerName" placeholder="Como podemos te chamar?" maxlength="50" required>
+        <label for="orderNote">OBSERVAÇÃO <small>OPCIONAL</small></label>
+        <textarea id="orderNote" placeholder="Algum detalhe sobre seu pedido?" maxlength="300"></textarea>
+        <button type="submit" class="checkout-button">CONFIRMAR PEDIDO <span>→</span></button>
       </form>
       <div id="orderFeedback" class="order-feedback"></div>
     </div>
