@@ -84,7 +84,7 @@ window.Checkout = (() => {
         Obrigado, ${escapeHTML(name)}!<br><br>
         Seu pedido foi registrado com sucesso.<br>
         <small>Número do pedido: ${displayOrderNumber === null ? "confirmado" : String(displayOrderNumber).padStart(3, "0")}</small><br><br>
-        Em breve entraremos em contato para confirmar.
+        Aguarde seu pedido.
       `;
       feedback.style.display = "block";
       form.reset();
