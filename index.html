@@ -13,7 +13,20 @@
   <link rel="stylesheet" href="./assets/css/responsive.css">
 </head>
 <body>
-  <main class="app-shell">
+  <section class="landing-screen" id="landingScreen" aria-label="JP Burguer">
+    <div class="landing-shade"></div>
+    <div class="landing-content">
+      <a class="landing-brand" href="#" aria-label="JP Burguer">JP<span>.</span><small>BURGUER</small></a>
+      <div class="landing-copy">
+        <span class="landing-kicker">SABOR DE VERDADE. EXPERIÊNCIA JP.</span>
+        <h1>SEU PRÓXIMO<br>BURGER FAVORITO<br><em>COMEÇA AQUI.</em></h1>
+        <p>PREPARADO NA HORA. FEITO PARA MARCAR.</p>
+      </div>
+      <div class="landing-bottom"><span>JP BURGUER</span><span class="landing-line"></span><span>DESDE O PRIMEIRO MORDIDA</span></div>
+    </div>
+    <button class="landing-menu-button" id="enterMenu" type="button">MENU <span>↗</span></button>
+  </section>
+  <main class="app-shell menu-app" id="menuApp" hidden>
     <header class="topbar">
       <a class="brand" href="#topo" aria-label="JP Burguer início"><span class="brand-mark">JP<span>.</span></span><span class="brand-name">BURGUER</span></a>
       <div class="topbar-actions"><button class="comanda-access" id="openComanda" type="button" aria-label="Minha comanda" title="Minha comanda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button><div class="topbar-note"><span class="status-dot"></span> CARDÁPIO DIGITAL</div></div>
