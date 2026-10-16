@@ -15,91 +15,32 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <a class="brand" href="#topo" aria-label="JP Burguer início">
-        <span class="brand-mark">JP<span>.</span></span>
-        <span class="brand-name">BURGUER</span>
-      </a>
+      <a class="brand" href="#topo" aria-label="JP Burguer início"><span class="brand-mark">JP<span>.</span></span><span class="brand-name">BURGUER</span></a>
       <div class="topbar-note"><span class="status-dot"></span> CARDÁPIO DIGITAL</div>
-      <button class="top-cart" id="openCart" aria-label="Abrir sacola">
-        <span class="bag-icon">▢</span><span class="top-cart-count" id="cartCount">0</span>
-      </button>
+      <button class="top-cart" id="openCart" aria-label="Abrir sacola"><span class="bag-icon">▢</span><span class="top-cart-count" id="cartCount">0</span></button>
     </header>
-
     <section class="welcome" id="topo">
-      <div class="welcome-copy">
-        <span class="welcome-kicker">BEM-VINDO AO JP</span>
-        <h1>Hoje merece<br>um burger <span>de verdade.</span></h1>
-        <p>Escolha seus favoritos e monte seu pedido.</p>
-      </div>
-      <div class="welcome-art" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=85" alt="">
-        <span>JP<br>BURGER</span>
-      </div>
+      <div class="welcome-copy"><span class="welcome-kicker">BEM-VINDO AO JP</span><h1>Hoje merece<br>um burger <span>de verdade.</span></h1><p>Escolha seus favoritos e monte seu pedido.</p></div>
+      <div class="welcome-art" aria-hidden="true"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=85" alt=""><span>JP<br>BURGER</span></div>
       <div class="welcome-bottom"><span>FEITO NA HORA</span><i></i><span>FEITO PRA VOCÊ</span></div>
     </section>
-
     <section class="menu-section" id="cardapio">
-      <div class="section-title">
-        <div><span class="section-kicker">ESCOLHA E APROVEITE</span><h2>Nosso cardápio<span>.</span></h2></div>
-        <span class="item-hint">TOQUE PARA ADICIONAR</span>
-      </div>
-
-      <nav class="category-list" id="categories" aria-label="Categorias do cardápio">
-        <button class="category active" data-category="todos">Todos</button>
-        <button class="category" data-category="classicos">Clássicos</button>
-        <button class="category" data-category="especiais">Especiais</button>
-        <button class="category" data-category="acompanhamentos">Acompanhamentos</button>
-        <button class="category" data-category="bebidas">Bebidas</button>
-      </nav>
-
-      <div class="product-grid" id="productGrid"></div>
+      <div class="section-title"><div><span class="section-kicker">ESCOLHA E APROVEITE</span><h2>Nosso cardápio<span>.</span></h2></div><span class="item-hint">TOQUE PARA ADICIONAR</span></div>
+      <nav class="category-list" id="categories" aria-label="Categorias do cardápio"><button class="category active" data-category="todos">Todos</button></nav>
+      <div class="product-grid" id="productGrid"><p class="menu-loading">Carregando nosso cardápio...</p></div>
     </section>
-
-    <footer class="app-footer">
-      <span class="footer-logo">JP<span>.</span></span>
-      <span>Obrigado por escolher o JP BURGUER.</span>
-    </footer>
+    <footer class="app-footer"><span class="footer-logo">JP<span>.</span></span><span>Obrigado por escolher o JP BURGUER.</span><a href="./admin.html" class="admin-access">Área administrativa</a></footer>
   </main>
-
-  <button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido" hidden>
-    <span class="floating-cart-icon">▢</span>
-    <span class="floating-cart-label">Ver meu pedido <small id="floatingCartCount">0 itens</small></span>
-    <strong id="floatingCartTotal">R$ 0,00</strong>
-    <span class="floating-cart-arrow">→</span>
-  </button>
-
+  <button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido" hidden><span class="floating-cart-icon">▢</span><span class="floating-cart-label">Ver meu pedido <small id="floatingCartCount">0 itens</small></span><strong id="floatingCartTotal">R$ 0,00</strong><span class="floating-cart-arrow">→</span></button>
   <div class="modal-overlay" id="cartOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-label="Meu pedido">
-    <div class="drawer-header">
-      <div><span class="drawer-kicker">SUA SELEÇÃO</span><h2>Meu pedido<span>.</span></h2></div>
-      <button class="close-button" id="closeCart" aria-label="Fechar carrinho">×</button>
-    </div>
-    <div class="cart-items" id="cartItems">
-      <div class="empty-cart"><span class="empty-bag">▢</span><p>Sua sacola está vazia.</p><small>Adicione seus favoritos para começar.</small></div>
-    </div>
-    <div class="cart-footer">
-      <div class="cart-total"><span>Total do pedido</span><strong id="cartTotal">R$ 0,00</strong></div>
-      <button class="checkout-button" id="checkoutButton" disabled>CONTINUAR <span>→</span></button>
-    </div>
+    <div class="drawer-header"><div><span class="drawer-kicker">SUA SELEÇÃO</span><h2>Meu pedido<span>.</span></h2></div><button class="close-button" id="closeCart" aria-label="Fechar carrinho">×</button></div>
+    <div class="cart-items" id="cartItems"><div class="empty-cart"><span class="empty-bag">▢</span><p>Sua sacola está vazia.</p><small>Adicione seus favoritos para começar.</small></div></div>
+    <div class="cart-footer"><div class="cart-total"><span>Total do pedido</span><strong id="cartTotal">R$ 0,00</strong></div><button class="checkout-button" id="checkoutButton" disabled>CONTINUAR <span>→</span></button></div>
   </aside>
-
-  <div class="checkout-overlay" id="checkoutOverlay">
-    <div class="checkout-modal">
-      <button class="close-button checkout-close" id="closeCheckout" aria-label="Fechar">×</button>
-      <span class="drawer-kicker">SÓ MAIS UM PASSO</span>
-      <h2>Quem está pedindo<span>?</span></h2>
-      <p>Digite seu nome para identificarmos seu pedido.</p>
-      <form id="checkoutForm">
-        <label for="customerName">SEU NOME</label>
-        <input type="text" id="customerName" placeholder="Como podemos te chamar?" maxlength="50" required>
-        <label for="orderNote">OBSERVAÇÃO <small>OPCIONAL</small></label>
-        <textarea id="orderNote" placeholder="Algum detalhe sobre seu pedido?" maxlength="300"></textarea>
-        <button type="submit" class="checkout-button">CONFIRMAR PEDIDO <span>→</span></button>
-      </form>
-      <div id="orderFeedback" class="order-feedback"></div>
-    </div>
-  </div>
-
+  <div class="checkout-overlay" id="checkoutOverlay"><div class="checkout-modal"><button class="close-button checkout-close" id="closeCheckout" aria-label="Fechar">×</button><span class="drawer-kicker">SÓ MAIS UM PASSO</span><h2>Quem está pedindo<span>?</span></h2><p>Digite seu nome para identificarmos seu pedido.</p><form id="checkoutForm"><label for="customerName">SEU NOME</label><input type="text" id="customerName" placeholder="Como podemos te chamar?" maxlength="50" required><label for="orderNote">OBSERVAÇÃO <small>OPCIONAL</small></label><textarea id="orderNote" placeholder="Algum detalhe sobre seu pedido?" maxlength="300"></textarea><button type="submit" class="checkout-button">CONFIRMAR PEDIDO <span>→</span></button></form><div id="orderFeedback" class="order-feedback"></div></div></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./assets/js/supabase.js"></script>
   <script src="./assets/js/menu.js"></script>
   <script src="./assets/js/cart.js"></script>
   <script src="./assets/js/checkout.js"></script>
