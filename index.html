@@ -4,266 +4,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#171717">
-
-  <title>JP BURGUER | Seu pedido, seu momento.</title>
-  <meta name="description" content="Conheça o cardápio JP BURGUER e monte seu pedido.">
-
+  <title>JP BURGUER | Cardápio</title>
+  <meta name="description" content="Confira o cardápio JP BURGUER e faça seu pedido.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/responsive.css">
 </head>
-
 <body>
-
   <main>
-
-    <!-- CAPA INICIAL -->
-    <section class="hero cover-screen" id="inicio">
-
-      <div class="hero-overlay"></div>
-
-      <div class="cover-brand">
-        <span>JP<span class="orange">.</span></span>
-        <small>BURGUER</small>
-      </div>
-
-      <div class="hero-content">
-
-        <span class="eyebrow">SMASHED BURGERS • GOOD TIMES</span>
-
-        <h1>
-          NÃO É SÓ<br>
-          HAMBÚRGUER.<br>
-          <span>É JP.</span>
-        </h1>
-
-        <p>
-          Ingredientes selecionados, sabor marcante
-          e uma experiência feita para você.
-        </p>
-
-      </div>
-
-      <a href="#cardapio" class="cover-enter">
-        <span>ENTRAR NO CARDÁPIO</span>
-        <span class="enter-arrow">↗</span>
-      </a>
-
-      <div class="cover-bottom">
-        EST. 2026 <span>•</span> GOOD FOOD. GOOD TIMES.
-      </div>
-
+    <section class="cover-screen" id="inicio" aria-label="JP Burguer">
+      <div class="cover-shade"></div>
+      <div class="cover-brand"><strong>JP<span>.</span></strong><small>BURGUER</small></div>
+      <a class="cover-enter" href="#cardapio"><span>VER CARDÁPIO</span><b>↗</b></a>
     </section>
 
-
-    <!-- CARDÁPIO -->
     <section class="menu-section" id="cardapio">
+      <header class="menu-header">
+        <a class="menu-brand" href="#inicio">JP<span>.</span><small>BURGUER</small></a>
+        <button class="cart-button" id="openCart" aria-label="Abrir meu pedido">
+          <span>MEU PEDIDO</span><span class="cart-icon">🛒</span><span class="cart-count" id="cartCount">0</span>
+        </button>
+      </header>
 
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">ESCOLHA O SEU FAVORITO</span>
-          <h2>EXPLORE NOSSO <span>CARDÁPIO.</span></h2>
-        </div>
-
-        <p>
-          Cada detalhe importa.<br>
-          Escolha, personalize e aproveite.
-        </p>
-
+      <div class="menu-intro">
+        <span class="eyebrow">FEITO NA HORA. FEITO PRA VOCÊ.</span>
+        <h1>ESCOLHA O SEU <span>JP.</span></h1>
       </div>
 
+      <nav class="category-list" id="categories" aria-label="Categorias do cardápio">
+        <button class="category active" data-category="todos">TODOS</button>
+        <button class="category" data-category="classicos">CLÁSSICOS</button>
+        <button class="category" data-category="especiais">ESPECIAIS</button>
+        <button class="category" data-category="acompanhamentos">ACOMPANHAMENTOS</button>
+        <button class="category" data-category="bebidas">BEBIDAS</button>
+      </nav>
 
-      <!-- CARRINHO -->
-      <div class="menu-cart-area">
-
-        <button class="cart-button" id="openCart">
-          <span>MEU PEDIDO</span>
-          <span class="cart-icon">🛒</span>
-          <span class="cart-count" id="cartCount">0</span>
-        </button>
-
-      </div>
-
-
-      <!-- CATEGORIAS -->
-      <div class="category-list" id="categories">
-
-        <button class="category active" data-category="todos">
-          TODOS
-        </button>
-
-        <button class="category" data-category="classicos">
-          CLÁSSICOS
-        </button>
-
-        <button class="category" data-category="especiais">
-          ESPECIAIS
-        </button>
-
-        <button class="category" data-category="acompanhamentos">
-          ACOMPANHAMENTOS
-        </button>
-
-        <button class="category" data-category="bebidas">
-          BEBIDAS
-        </button>
-
-      </div>
-
-
-      <!-- PRODUTOS -->
-      <div class="product-grid" id="productGrid">
-        <!-- Produtos carregados pelo JavaScript -->
-      </div>
-
+      <div class="product-grid" id="productGrid"></div>
+      <div class="menu-end">JP BURGUER <span>•</span> BOM APETITE!</div>
     </section>
-
-
-    <!-- SOBRE -->
-    <section class="about-section" id="sobre">
-
-      <span class="eyebrow">WELCOME TO JP BURGUER</span>
-
-      <h2>
-        GOOD FOOD.<br>
-        <span>GOOD MOMENTS.</span>
-      </h2>
-
-      <p>
-        Mais que matar a fome, queremos fazer parte dos bons momentos.
-      </p>
-
-    </section>
-
   </main>
 
+  <button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido">
+    <span>VER MEU PEDIDO</span><span class="floating-cart-count" id="floatingCartCount">0</span><strong id="floatingCartTotal">R$ 0,00</strong>
+  </button>
 
-  <!-- RODAPÉ -->
-  <footer class="footer">
-
-    <a href="#inicio" class="footer-brand">
-      JP<span>.</span> BURGUER
-    </a>
-
-    <p>SEU PEDIDO. SEU MOMENTO.</p>
-
-    <span>© 2026 JP BURGUER</span>
-
-  </footer>
-
-
-  <!-- CARRINHO -->
   <div class="modal-overlay" id="cartOverlay"></div>
-
   <aside class="cart-drawer" id="cartDrawer">
-
     <div class="drawer-header">
-
-      <div>
-        <span class="eyebrow">SEU PEDIDO</span>
-        <h2>MEU CARRINHO<span>.</span></h2>
-      </div>
-
-      <button class="close-button" id="closeCart">
-        ✕
-      </button>
-
+      <div><span class="eyebrow">SEU PEDIDO</span><h2>MEU CARRINHO<span>.</span></h2></div>
+      <button class="close-button" id="closeCart" aria-label="Fechar carrinho">✕</button>
     </div>
-
-
     <div class="cart-items" id="cartItems">
-
-      <div class="empty-cart">
-        <span>🛒</span>
-        <p>Seu carrinho está vazio.</p>
-        <small>Que tal escolher seu primeiro burger?</small>
-      </div>
-
+      <div class="empty-cart"><span>🛒</span><p>Seu carrinho está vazio.</p><small>Escolha algo delicioso no cardápio.</small></div>
     </div>
-
-
     <div class="cart-footer">
-
-      <div class="cart-total">
-        <span>TOTAL DO PEDIDO</span>
-        <strong id="cartTotal">R$ 0,00</strong>
-      </div>
-
-      <button class="checkout-button" id="checkoutButton" disabled>
-        FINALIZAR PEDIDO <span>→</span>
-      </button>
-
+      <div class="cart-total"><span>TOTAL DO PEDIDO</span><strong id="cartTotal">R$ 0,00</strong></div>
+      <button class="checkout-button" id="checkoutButton" disabled>CONTINUAR PEDIDO <span>→</span></button>
     </div>
-
   </aside>
 
-
-  <!-- FINALIZAÇÃO -->
   <div class="checkout-overlay" id="checkoutOverlay">
-
     <div class="checkout-modal">
-
-      <button class="close-button checkout-close" id="closeCheckout">
-        ✕
-      </button>
-
-      <span class="eyebrow">SÓ FALTA UMA COISA</span>
-
-      <h2>
-        IDENTIFIQUE SEU <span>PEDIDO.</span>
-      </h2>
-
-      <p>
-        Informe seu nome para que possamos identificar seu pedido.
-      </p>
-
-
+      <button class="close-button checkout-close" id="closeCheckout" aria-label="Fechar">✕</button>
+      <span class="eyebrow">IDENTIFICAÇÃO</span>
+      <h2>QUEM VAI <span>RECEBER?</span></h2>
+      <p>Informe seu nome para identificarmos seu pedido.</p>
       <form id="checkoutForm">
-
         <label for="customerName">SEU NOME</label>
-
-        <input
-          type="text"
-          id="customerName"
-          placeholder="Digite seu nome"
-          maxlength="50"
-          required
-        >
-
-
+        <input type="text" id="customerName" placeholder="Digite seu nome" maxlength="50" required>
         <label for="orderNote">OBSERVAÇÕES (OPCIONAL)</label>
-
-        <textarea
-          id="orderNote"
-          placeholder="Alguma observação sobre seu pedido?"
-          maxlength="300"
-        ></textarea>
-
-
-        <button type="submit" class="checkout-button">
-          CONFIRMAR PEDIDO →
-        </button>
-
+        <textarea id="orderNote" placeholder="Alguma observação?" maxlength="300"></textarea>
+        <button type="submit" class="checkout-button">CONFIRMAR PEDIDO →</button>
       </form>
-
-
       <div id="orderFeedback" class="order-feedback"></div>
-
     </div>
-
   </div>
 
-
-  <!-- JAVASCRIPT -->
   <script src="./assets/js/menu.js"></script>
   <script src="./assets/js/cart.js"></script>
   <script src="./assets/js/checkout.js"></script>
   <script src="./assets/js/app.js"></script>
-
 </body>
 </html>
