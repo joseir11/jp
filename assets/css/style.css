@@ -104,7 +104,8 @@ button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transpar
 
 /* Consulta da comanda pelo cliente */
 .topbar-actions{display:flex;align-items:center;gap:10px}
-.comanda-access{padding:8px 10px;border:1px solid #f2d4c1;border-radius:30px;background:#fff8f3;color:var(--orange);font-size:8px;font-weight:900;letter-spacing:.45px;white-space:nowrap}
+.comanda-access{width:36px;height:36px;display:grid;place-items:center;padding:0;border:1px solid #f2d4c1;border-radius:50%;background:#fff8f3;color:var(--orange)}
+.comanda-access svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .comanda-overlay{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;padding:14px;background:#0008}
 .comanda-overlay.show{display:flex}
 .comanda-panel{width:min(520px,100%);max-height:92dvh;display:flex;flex-direction:column;overflow:hidden;border-radius:13px;background:#fff;box-shadow:0 15px 60px #0002}
@@ -130,4 +131,4 @@ button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transpar
 .comanda-line strong{white-space:nowrap}
 .comanda-order-total{display:flex;justify-content:space-between;margin-top:9px;padding-top:10px;border-top:1px solid #eee;font-size:10px;font-weight:800}
 .comanda-closed{margin-top:12px;padding:11px;border-radius:6px;background:#f4f4f4;color:#666;font-size:10px;line-height:1.5}
-@media(max-width:390px){.topbar-actions{gap:6px}.comanda-access{padding:7px 8px;font-size:7px}.topbar-note{font-size:7px;letter-spacing:.5px}}
+@media(max-width:390px){.topbar-actions{gap:6px}.topbar-note{font-size:7px;letter-spacing:.5px}}
