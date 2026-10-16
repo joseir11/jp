@@ -23,3 +23,8 @@
 .admin-orders-empty strong{font-size:13px}
 .admin-orders-empty span{color:#999;font-size:11px}
 @media(max-width:650px){.admin-orders-list{grid-template-columns:1fr}.admin-panel-heading{align-items:flex-start}.admin-order-bottom{align-items:flex-start;flex-direction:column}.admin-order-bottom select{max-width:none;width:100%}}
+
+.admin-order-bottom{flex-wrap:wrap}
+.admin-delete-order{padding:9px 11px;border:1px solid #f0d5cc;border-radius:5px;background:#fff8f5;color:#b34c25;font-size:9px;font-weight:900;white-space:nowrap}
+.admin-delete-order:disabled{opacity:.55;cursor:wait}
+@media(max-width:650px){.admin-delete-order{width:100%}}
