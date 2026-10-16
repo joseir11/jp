@@ -16,7 +16,7 @@
   <main class="app-shell">
     <header class="topbar">
       <a class="brand" href="#topo" aria-label="JP Burguer início"><span class="brand-mark">JP<span>.</span></span><span class="brand-name">BURGUER</span></a>
-      <div class="topbar-note"><span class="status-dot"></span> CARDÁPIO DIGITAL</div>
+      <div class="topbar-actions"><button class="comanda-access" id="openComanda" type="button">MINHA COMANDA</button><div class="topbar-note"><span class="status-dot"></span> CARDÁPIO DIGITAL</div></div>
       <button class="top-cart" id="openCart" aria-label="Abrir sacola"><span class="bag-icon">▢</span><span class="top-cart-count" id="cartCount">0</span></button>
     </header>
     <section class="welcome" id="topo">
@@ -32,6 +32,16 @@
     <footer class="app-footer"><span class="footer-logo">JP<span>.</span></span><span>Obrigado por escolher o JP BURGUER.</span><a href="./admin.html" class="admin-access">Área administrativa</a></footer>
   </main>
   <button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido" hidden><span class="floating-cart-icon">▢</span><span class="floating-cart-label">Ver meu pedido <small id="floatingCartCount">0 itens</small></span><strong id="floatingCartTotal">R$ 0,00</strong><span class="floating-cart-arrow">→</span></button>
+  <div class="comanda-overlay" id="comandaOverlay" aria-hidden="true">
+    <section class="comanda-panel" role="dialog" aria-modal="true" aria-labelledby="comandaTitle">
+      <div class="comanda-panel-header">
+        <div><span class="drawer-kicker">ACOMPANHE SEU CONSUMO</span><h2 id="comandaTitle">Minha comanda<span>.</span></h2><p id="comandaSubtitle">Consulte seus pedidos e o total acumulado.</p></div>
+        <button class="close-button" id="closeComanda" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="comanda-live"><span class="status-dot"></span> Atualização automática</div>
+      <div id="comandaContent" class="comanda-content"><p class="comanda-loading">Carregando sua comanda...</p></div>
+    </section>
+  </div>
   <div class="modal-overlay" id="cartOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-label="Meu pedido">
     <div class="drawer-header"><div><span class="drawer-kicker">SUA SELEÇÃO</span><h2>Meu pedido<span>.</span></h2></div><button class="close-button" id="closeCart" aria-label="Fechar carrinho">×</button></div>
@@ -44,6 +54,7 @@
   <script src="./assets/js/menu.js"></script>
   <script src="./assets/js/cart.js"></script>
   <script src="./assets/js/checkout.js"></script>
+  <script src="./assets/js/comanda.js"></script>
   <script src="./assets/js/app.js"></script>
 </body>
 </html>
