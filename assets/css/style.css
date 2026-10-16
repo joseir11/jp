@@ -179,7 +179,7 @@ body{ text-transform:uppercase; }
 .welcome-bottom{bottom:17px}
 
 
-/* ATALHO FLUTUANTE PARA O PAINEL ADMINISTRATIVO */
-.floating-admin-access{position:fixed;z-index:12;right:max(14px,calc((100vw - 520px)/2 + 14px));bottom:86px;width:43px;height:43px;display:grid;place-items:center;border:1px solid #f47721;border-radius:50%;background:#191919;color:#fff;box-shadow:0 4px 15px #0003;transition:transform .2s,background .2s}
-.floating-admin-access svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.floating-admin-access:hover{background:#f47721;transform:translateY(-2px)}
+/* ACESSO DISCRETO AO PAINEL ADMINISTRATIVO */
+.admin-access{position:fixed;z-index:12;right:12px;bottom:10px;width:22px;height:22px;display:grid;place-items:center;color:#777;opacity:.13;transition:opacity .2s ease}
+.admin-access svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.admin-access:hover,.admin-access:focus-visible{opacity:.65;outline:none}
