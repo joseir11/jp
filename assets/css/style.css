@@ -177,3 +177,9 @@ body{ text-transform:uppercase; }
 .welcome{min-height:220px;padding-bottom:43px}
 .welcome-copy p{margin-top:15px;line-height:1.7}
 .welcome-bottom{bottom:17px}
+
+
+/* ATALHO FLUTUANTE PARA O PAINEL ADMINISTRATIVO */
+.floating-admin-access{position:fixed;z-index:12;right:max(14px,calc((100vw - 520px)/2 + 14px));bottom:86px;width:43px;height:43px;display:grid;place-items:center;border:1px solid #f47721;border-radius:50%;background:#191919;color:#fff;box-shadow:0 4px 15px #0003;transition:transform .2s,background .2s}
+.floating-admin-access svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.floating-admin-access:hover{background:#f47721;transform:translateY(-2px)}
