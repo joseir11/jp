@@ -1,0 +1,164 @@
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .highlights {
+    gap: 25px;
+  }
+
+  .highlights div {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    height: 70px;
+    padding: 0 18px;
+  }
+
+  .brand-jp {
+    font-size: 35px;
+  }
+
+  .brand-name {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .cart-button {
+    padding: 9px 10px;
+    font-size: 9px;
+  }
+
+  .hero {
+    min-height: 540px;
+    background-position: 58% center;
+  }
+
+  .hero-content {
+    padding: 65px 25px;
+  }
+
+  .hero h1 {
+    font-size: clamp(65px, 17vw, 90px);
+  }
+
+  .hero-content > p {
+    font-size: 12px;
+    max-width: 270px;
+  }
+
+  .hero-tag {
+    width: 75px;
+    height: 75px;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .hero-tag strong {
+    font-size: 30px;
+  }
+
+  .hero-tag span {
+    font-size: 7px;
+  }
+
+  .hero-footer {
+    font-size: 7px;
+    gap: 7px;
+    margin-top: 40px;
+  }
+
+  .highlights {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 10px;
+  }
+
+  .highlights div {
+    font-size: 11px;
+  }
+
+  .menu-section {
+    padding: 65px 18px;
+  }
+
+  .section-heading {
+    display: block;
+    margin-bottom: 30px;
+  }
+
+  .section-heading h2 {
+    font-size: 43px;
+  }
+
+  .section-heading > p {
+    margin-top: 15px;
+  }
+
+  .category-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+  }
+
+  .category-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .product-image {
+    height: 230px;
+  }
+
+  .product-info {
+    padding: 20px;
+  }
+
+  .about-section {
+    padding: 65px 20px;
+  }
+
+  .about-section h2 {
+    font-size: 53px;
+  }
+
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 15px;
+  }
+
+  .cart-drawer {
+    padding: 23px 18px;
+  }
+
+  .checkout-modal {
+    padding: 28px 22px;
+    max-height: 90dvh;
+    overflow-y: auto;
+  }
+
+  .drawer-header h2,
+  .checkout-modal h2 {
+    font-size: 29px;
+  }
+}
