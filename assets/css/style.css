@@ -179,7 +179,32 @@ body{ text-transform:uppercase; }
 .welcome-bottom{bottom:17px}
 
 
-/* ACESSO DISCRETO AO PAINEL ADMINISTRATIVO */
-.admin-access{position:fixed;z-index:12;right:12px;bottom:10px;width:22px;height:22px;display:grid;place-items:center;color:#777;opacity:.13;transition:opacity .2s ease}
-.admin-access svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.admin-access:hover,.admin-access:focus-visible{opacity:.65;outline:none}
+
+
+/* ACESSO ADMINISTRATIVO — MARCA MINIMALISTA */
+a.admin-access{
+  position:fixed!important;
+  z-index:12!important;
+  right:7px!important;
+  bottom:6px!important;
+  width:12px!important;
+  height:12px!important;
+  min-width:0!important;
+  min-height:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#888!important;
+  font-size:10px!important;
+  line-height:1!important;
+  text-decoration:none!important;
+  opacity:.16!important;
+}
+a.admin-access span{font:900 12px/1 Arial,sans-serif!important;color:inherit!important}
+a.admin-access:hover,a.admin-access:focus-visible{opacity:.35!important;outline:none!important}
