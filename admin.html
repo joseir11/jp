@@ -35,11 +35,17 @@
 
     <section id="dashboard" class="admin-dashboard" hidden>
       <div class="admin-title-row"><div><span class="section-kicker">JP BURGUER</span><h1>Seus produtos<span>.</span></h1><p>Cadastre e atualize os itens que aparecem no cardápio.</p></div><a class="view-menu-link" href="./index.html" target="_blank">Ver cardápio ↗</a></div>
-      <div class="admin-tabs"><button class="admin-tab active" data-tab="products">Produtos</button><button class="admin-tab" data-tab="categories">Categorias</button></div>
+      <div class="admin-tabs"><button class="admin-tab active" data-tab="products">Produtos</button><button class="admin-tab" data-tab="orders">Pedidos <span id="newOrderCount" class="admin-order-count" hidden>0</span></button><button class="admin-tab" data-tab="categories">Categorias</button></div>
 
       <section id="productsPanel" class="admin-panel">
         <div class="admin-panel-heading"><h2>Produtos cadastrados</h2><button id="newProductButton" class="admin-primary compact">+ NOVO PRODUTO</button></div>
         <div id="productList" class="admin-product-list"></div>
+      </section>
+
+      <section id="ordersPanel" class="admin-panel" hidden>
+        <div class="admin-panel-heading"><div><h2>Pedidos recebidos</h2><p class="admin-orders-caption">Atualização automática quando chegar um novo pedido.</p></div><button id="refreshOrdersButton" class="admin-secondary-button" type="button">ATUALIZAR ↻</button></div>
+        <div id="ordersMessage" class="admin-message" role="status"></div>
+        <div id="ordersList" class="admin-orders-list"><p class="admin-empty">Carregando pedidos...</p></div>
       </section>
 
       <section id="categoriesPanel" class="admin-panel" hidden>
