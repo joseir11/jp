@@ -31,7 +31,7 @@ function renderProducts(category = "todos") {
         <p>${product.description}</p>
         <div class="product-bottom">
           <span class="product-price">${formatMoney(product.price)}</span>
-          <button class="add-button" data-add="${product.id}">+ ADICIONAR</button>
+          <button class="add-button" data-add="${product.id}" aria-label="Adicionar ${product.name}">+</button>
         </div>
       </div>
     </article>
@@ -41,7 +41,6 @@ function renderProducts(category = "todos") {
 categories.addEventListener("click", event => {
   const button = event.target.closest("[data-category]");
   if (!button) return;
-
   document.querySelectorAll(".category").forEach(item => item.classList.remove("active"));
   button.classList.add("active");
   renderProducts(button.dataset.category);
@@ -50,7 +49,6 @@ categories.addEventListener("click", event => {
 productGrid.addEventListener("click", event => {
   const button = event.target.closest("[data-add]");
   if (!button) return;
-
   window.Cart.add(Number(button.dataset.add));
   renderCart();
   openCart();
@@ -64,19 +62,17 @@ function renderCart() {
   cartCount.textContent = count;
   cartTotal.textContent = formatMoney(total);
   checkoutButton.disabled = items.length === 0;
-
-  floatingCartCount.textContent = count;
+  floatingCartCount.textContent = count + (count === 1 ? " item" : " itens");
   floatingCartTotal.textContent = formatMoney(total);
   floatingCart.hidden = items.length === 0;
 
-  if (items.length === 0) {
+  if (!items.length) {
     cartItems.innerHTML = `
       <div class="empty-cart">
-        <span>🛒</span>
-        <p>Seu carrinho está vazio.</p>
-        <small>Escolha algo delicioso no cardápio.</small>
-      </div>
-    `;
+        <span class="empty-bag">▢</span>
+        <p>Sua sacola está vazia.</p>
+        <small>Adicione seus favoritos para começar.</small>
+      </div>`;
     return;
   }
 
@@ -91,14 +87,12 @@ function renderCart() {
           <button data-plus="${item.id}" aria-label="Aumentar quantidade">+</button>
         </div>
       </div>
-    </div>
-  `).join("");
+    </div>`).join("");
 }
 
 cartItems.addEventListener("click", event => {
   const plus = event.target.closest("[data-plus]");
   const minus = event.target.closest("[data-minus]");
-
   if (plus) window.Cart.changeQuantity(Number(plus.dataset.plus), 1);
   if (minus) window.Cart.changeQuantity(Number(minus.dataset.minus), -1);
   renderCart();
@@ -109,7 +103,6 @@ function openCart() {
   cartOverlay.classList.add("show");
   document.body.style.overflow = "hidden";
 }
-
 function closeCart() {
   cartDrawer.classList.remove("open");
   cartOverlay.classList.remove("show");
@@ -120,17 +113,12 @@ document.getElementById("openCart").addEventListener("click", openCart);
 floatingCart.addEventListener("click", openCart);
 document.getElementById("closeCart").addEventListener("click", closeCart);
 cartOverlay.addEventListener("click", closeCart);
-
 checkoutButton.addEventListener("click", () => {
-  if (window.Cart.getItems().length === 0) return;
+  if (!window.Cart.getItems().length) return;
   closeCart();
   window.Checkout.open();
 });
-
-document.getElementById("closeCheckout").addEventListener("click", () => {
-  window.Checkout.close();
-});
-
+document.getElementById("closeCheckout").addEventListener("click", () => window.Checkout.close());
 document.getElementById("checkoutOverlay").addEventListener("click", event => {
   if (event.target.id === "checkoutOverlay") window.Checkout.close();
 });
