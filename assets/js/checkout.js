@@ -71,6 +71,11 @@ window.Checkout = (() => {
 
       if (error) throw error;
 
+      const { data: orderNumber, error: numberError } = await window.supabaseClient.rpc("get_order_number", {
+        p_order_id: orderId
+      });
+      if (numberError) throw numberError;
+
       window.Cart.clear();
       refreshCartAfterOrder();
 
@@ -78,7 +83,7 @@ window.Checkout = (() => {
         <strong>PEDIDO RECEBIDO!</strong><br>
         Obrigado, ${escapeHTML(name)}!<br><br>
         Seu pedido foi registrado com sucesso.<br>
-        <small>Número do pedido: ${escapeHTML(orderId)}</small><br><br>
+        <small>Número do pedido: ${String(orderNumber).padStart(3, "0")}</small><br><br>
         Em breve entraremos em contato para confirmar.
       `;
       feedback.style.display = "block";
