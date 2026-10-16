@@ -1,3 +1,12 @@
+const landingScreen=document.getElementById("landingScreen");
+const menuApp=document.getElementById("menuApp");
+document.getElementById("enterMenu").addEventListener("click",()=>{
+  landingScreen.classList.add("landing-leaving");
+  landingScreen.hidden=true;
+  menuApp.hidden=false;
+  window.scrollTo({top:0,behavior:"instant"});
+});
+
 const productGrid=document.getElementById("productGrid");
 const categories=document.getElementById("categories");
 const cartDrawer=document.getElementById("cartDrawer");
