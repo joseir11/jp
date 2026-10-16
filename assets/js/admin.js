@@ -36,7 +36,7 @@ function renderProducts(){
     <article class="admin-product-row ${p.active?"":"admin-inactive"}">
       <img src="${safe(p.image_url||"https://placehold.co/100x100?text=JP")}" alt="">
       <div class="admin-product-data"><strong>${safe(p.name)}</strong><small>${money(p.price)} · ${safe(p.categories?.name||"Sem categoria")} · ${p.active?"Visível":"Oculto"}</small></div>
-      <div class="admin-product-actions"><button data-edit="${p.id}">EDITAR</button><button data-toggle="${p.id}">${p.active?"OCULTAR":"ATIVAR"}</button></div>
+      <div class="admin-product-actions"><button data-edit="${p.id}">EDITAR</button><button data-toggle="${p.id}">${p.active?"OCULTAR":"ATIVAR"}</button><button data-delete="${p.id}">EXCLUIR</button></div>
     </article>`).join(""):'<p class="admin-empty">Nenhum produto cadastrado ainda.</p>';
 }
 function renderCategories(){
@@ -61,9 +61,9 @@ function openProduct(product=null){
   message("productMessage","",false);$("productModal").hidden=false;
 }
 $("productList").addEventListener("click",async event=>{
-  const edit=event.target.closest("[data-edit]"),toggle=event.target.closest("[data-toggle]");
+  const edit=event.target.closest("[data-edit]"),toggle=event.target.closest("[data-toggle]"),del=event.target.closest("[data-delete]");
   if(edit){openProduct(products.find(p=>p.id===edit.dataset.edit));return;}
-  if(toggle){const p=products.find(x=>x.id===toggle.dataset.toggle);const {error}=await db.from("products").update({active:!p.active}).eq("id",p.id);if(error)alert("Não foi possível atualizar o produto.");else await loadData();}
+  if(toggle){const p=products.find(x=>x.id===toggle.dataset.toggle);const {error}=await db.from("products").update({active:!p.active}).eq("id",p.id);if(error)alert("Não foi possível atualizar o produto.");else await loadData();return;}\n  if(del){const p=products.find(x=>x.id===del.dataset.delete);if(!confirm("Excluir definitivamente "+p.name+"?"))return;const {error}=await db.from("products").delete().eq("id",p.id);if(error)alert("Não foi possível excluir o produto.");else await loadData();}
 });
 $("categoryList").addEventListener("click",async event=>{
   const btn=event.target.closest("[data-cat-toggle]");if(!btn)return;
