@@ -98,3 +98,5 @@ button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transpar
 .checkout-modal textarea{min-height:78px;resize:vertical}
 .order-feedback{display:none;margin-top:16px;padding:13px;border-radius:6px;background:#f0f8f1;color:#347344;font-size:11px;line-height:1.6}
 @media(hover:hover){.product-card:hover .product-image img{transform:scale(1.035)}.add-button:hover{background:#e96612}}
+
+.menu-loading{grid-column:1/-1;padding:35px 10px;text-align:center;color:#888;font-size:12px}.admin-access{margin-top:10px;color:#aaa;font-size:8px;text-decoration:underline;text-underline-offset:3px}
