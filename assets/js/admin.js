@@ -63,7 +63,8 @@ function openProduct(product=null){
 $("productList").addEventListener("click",async event=>{
   const edit=event.target.closest("[data-edit]"),toggle=event.target.closest("[data-toggle]"),del=event.target.closest("[data-delete]");
   if(edit){openProduct(products.find(p=>p.id===edit.dataset.edit));return;}
-  if(toggle){const p=products.find(x=>x.id===toggle.dataset.toggle);const {error}=await db.from("products").update({active:!p.active}).eq("id",p.id);if(error)alert("Não foi possível atualizar o produto.");else await loadData();return;}\n  if(del){const p=products.find(x=>x.id===del.dataset.delete);if(!confirm("Excluir definitivamente "+p.name+"?"))return;const {error}=await db.from("products").delete().eq("id",p.id);if(error)alert("Não foi possível excluir o produto.");else await loadData();}
+  if(toggle){const p=products.find(x=>x.id===toggle.dataset.toggle);const {error}=await db.from("products").update({active:!p.active}).eq("id",p.id);if(error)alert("Não foi possível atualizar o produto.");else await loadData();return;}
+  if(del){const p=products.find(x=>x.id===del.dataset.delete);if(!confirm("Excluir definitivamente "+p.name+"?"))return;const {error}=await db.from("products").delete().eq("id",p.id);if(error)alert("Não foi possível excluir o produto.");else await loadData();}
 });
 $("categoryList").addEventListener("click",async event=>{
   const btn=event.target.closest("[data-cat-toggle]");if(!btn)return;
