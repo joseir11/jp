@@ -2,25 +2,41 @@ const db = window.supabaseClient;
 const $ = id => document.getElementById(id);
 let categories = [];
 let products = [];
+let orders = [];
 let editingImageUrl = "";
+let ordersChannel = null;
+let knownOrderIds = new Set();
+let unseenOrders = 0;
 
 const safe = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 const money = value => Number(value || 0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const slugify = value => value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const orderStatuses = ["NOVO","EM PREPARO","PRONTO","ENTREGUE"];
 
 function message(id,text,isError=true){$(id).textContent=text;$(id).style.color=isError?"#b34c25":"#347344";}
 
 async function checkSession(){
   const {data:{session}} = await db.auth.getSession();
-  if(session){$("loginPanel").hidden=true;$("dashboard").hidden=false;$("logoutButton").hidden=false;await loadData();}
+  if(session){
+    $("loginPanel").hidden=true;
+    $("dashboard").hidden=false;
+    $("logoutButton").hidden=false;
+    await loadData();
+    await loadOrders();
+    subscribeToOrders();
+  }
 }
 $("loginForm").addEventListener("submit",async event=>{
   event.preventDefault();message("loginMessage","Verificando acesso...");
   const {error}=await db.auth.signInWithPassword({email:$("adminEmail").value.trim(),password:$("adminPassword").value});
   if(error){message("loginMessage","Não foi possível entrar. Confira e-mail e senha.");return;}
-  $("loginPanel").hidden=true;$("dashboard").hidden=false;$("logoutButton").hidden=false;await loadData();
+  $("loginPanel").hidden=true;$("dashboard").hidden=false;$("logoutButton").hidden=false;
+  await loadData();await loadOrders();subscribeToOrders();
 });
-$("logoutButton").addEventListener("click",async()=>{await db.auth.signOut();location.reload();});
+$("logoutButton").addEventListener("click",async()=>{
+  if(ordersChannel)await db.removeChannel(ordersChannel);
+  await db.auth.signOut();location.reload();
+});
 
 async function loadData(){
   const [catRes,prodRes]=await Promise.all([
@@ -45,10 +61,95 @@ function renderCategories(){
 function fillCategorySelect(){
   $("productCategory").innerHTML=categories.filter(c=>c.active).map(c=>`<option value="${c.id}">${safe(c.name)}</option>`).join("");
 }
+
 document.querySelectorAll(".admin-tab").forEach(btn=>btn.addEventListener("click",()=>{
   document.querySelectorAll(".admin-tab").forEach(b=>b.classList.toggle("active",b===btn));
-  $("productsPanel").hidden=btn.dataset.tab!=="products";$("categoriesPanel").hidden=btn.dataset.tab!=="categories";
+  $("productsPanel").hidden=btn.dataset.tab!=="products";
+  $("ordersPanel").hidden=btn.dataset.tab!=="orders";
+  $("categoriesPanel").hidden=btn.dataset.tab!=="categories";
+  if(btn.dataset.tab==="orders"){unseenOrders=0;updateOrderBadge();}
 }));
+$("refreshOrdersButton").addEventListener("click",loadOrders);
+
+async function loadOrders(){
+  message("ordersMessage","Buscando pedidos...",false);
+  const {data,error}=await db.from("orders")
+    .select("id,customer_name,notes,status,total,created_at,order_items(id,product_name,unit_price,quantity,subtotal)")
+    .order("created_at",{ascending:false});
+  if(error){
+    message("ordersMessage","Não foi possível carregar os pedidos: "+error.message);
+    $("ordersList").innerHTML='<p class="admin-empty">Verifique a conexão e as permissões do banco.</p>';
+    return;
+  }
+  orders=data||[];
+  if(!knownOrderIds.size){knownOrderIds=new Set(orders.map(o=>o.id));}
+  renderOrders();
+  message("ordersMessage",orders.length?orders.length+" pedido(s) no histórico.":"Nenhum pedido recebido ainda.",false);
+}
+function renderOrders(){
+  if(!orders.length){
+    $("ordersList").innerHTML='<div class="admin-orders-empty"><strong>Nenhum pedido por enquanto.</strong><span>Quando um cliente confirmar o pedido, ele aparecerá aqui.</span></div>';
+    return;
+  }
+  $("ordersList").innerHTML=orders.map(order=>{
+    const items=order.order_items||[];
+    const date=new Date(order.created_at).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"});
+    const status=orderStatuses.includes(order.status)?order.status:"NOVO";
+    return `
+      <article class="admin-order-card">
+        <div class="admin-order-top">
+          <div><span class="admin-order-date">${safe(date)}</span><h3>${safe(order.customer_name)}</h3></div>
+          <strong class="admin-order-total">${money(order.total)}</strong>
+        </div>
+        <div class="admin-order-id">PEDIDO #${safe(order.id.slice(0,8).toUpperCase())}</div>
+        <div class="admin-order-items">
+          ${items.map(item=>`<div class="admin-order-item"><span><b>${Number(item.quantity)}×</b> ${safe(item.product_name)}</span><strong>${money(item.subtotal)}</strong></div>`).join("")}
+        </div>
+        ${order.notes? `<div class="admin-order-note"><b>OBSERVAÇÃO:</b> ${safe(order.notes)}</div>`:""}
+        <div class="admin-order-bottom">
+          <label for="status-${order.id}">STATUS DO PEDIDO</label>
+          <select id="status-${order.id}" data-order-status="${order.id}">
+            ${orderStatuses.map(s=>`<option value="${s}" ${s===status?"selected":""}>${s}</option>`).join("")}
+          </select>
+        </div>
+      </article>`;
+  }).join("");
+}
+$("ordersList").addEventListener("change",async event=>{
+  const select=event.target.closest("[data-order-status]");
+  if(!select)return;
+  const orderId=select.dataset.orderStatus;
+  const newStatus=select.value;
+  select.disabled=true;
+  const {error}=await db.from("orders").update({status:newStatus}).eq("id",orderId);
+  select.disabled=false;
+  if(error){alert("Não foi possível atualizar o status: "+error.message);await loadOrders();return;}
+  const order=orders.find(o=>o.id===orderId);
+  if(order)order.status=newStatus;
+});
+function updateOrderBadge(){
+  const badge=$("newOrderCount");
+  badge.textContent=String(unseenOrders);
+  badge.hidden=unseenOrders===0;
+}
+function subscribeToOrders(){
+  if(ordersChannel)db.removeChannel(ordersChannel);
+  ordersChannel=db.channel("jp-admin-orders")
+    .on("postgres_changes",{event:"INSERT",schema:"public",table:"orders"},payload=>{
+      if(!knownOrderIds.has(payload.new.id)){
+        knownOrderIds.add(payload.new.id);
+        const ordersTab=document.querySelector('.admin-tab[data-tab="orders"]');
+        if(!ordersTab.classList.contains("active")){unseenOrders++;updateOrderBadge();}
+      }
+      loadOrders();
+    })
+    .on("postgres_changes",{event:"UPDATE",schema:"public",table:"orders"},()=>loadOrders())
+    .subscribe(status=>{
+      if(status==="SUBSCRIBED")message("ordersMessage","Pedidos conectados em tempo real.",false);
+      if(status==="CHANNEL_ERROR"||status==="TIMED_OUT")message("ordersMessage","Tempo real indisponível. Use ATUALIZAR para consultar os pedidos.");
+    });
+}
+
 $("newProductButton").addEventListener("click",()=>openProduct());
 $("closeProductModal").addEventListener("click",()=>{$("productModal").hidden=true;});
 function openProduct(product=null){
