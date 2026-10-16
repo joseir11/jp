@@ -1,1 +1,198 @@
-teste
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171717">
+
+  <title>JP BURGUER | Seu pedido, seu momento.</title>
+  <meta name="description" content="Conheça o cardápio JP BURGUER e monte seu pedido.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/responsive.css">
+</head>
+
+<body>
+
+  <header class="header">
+    <a href="#" class="brand">
+      <span class="brand-jp">JP<span>.</span></span>
+      <span class="brand-name">BURGUER</span>
+    </a>
+
+    <nav class="desktop-nav">
+      <a href="#inicio">INÍCIO</a>
+      <a href="#cardapio">CARDÁPIO</a>
+      <a href="#sobre">SOBRE</a>
+    </nav>
+
+    <button class="cart-button" id="openCart">
+      <span>MEU PEDIDO</span>
+      <span class="cart-icon">🛒</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <main>
+
+    <section class="hero" id="inicio">
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <span class="eyebrow">SMASHED BURGERS • GOOD TIMES</span>
+
+        <h1>
+          NÃO É SÓ<br>
+          HAMBÚRGUER.<br>
+          <span>É JP.</span>
+        </h1>
+
+        <p>
+          Ingredientes selecionados, sabor marcante
+          e uma experiência feita para você.
+        </p>
+
+        <a href="#cardapio" class="primary-button">
+          EXPLORAR CARDÁPIO <span>↗</span>
+        </a>
+
+        <div class="hero-footer">
+          <span>FRESH INGREDIENTS</span>
+          <span>•</span>
+          <span>UNFORGETTABLE FLAVOR</span>
+        </div>
+      </div>
+
+      <div class="hero-tag">
+        <strong>JP</strong>
+        <span>BURGUER</span>
+      </div>
+    </section>
+
+    <section class="highlights">
+      <div>🔥 <span>SABOR DE VERDADE</span></div>
+      <div>🍔 <span>BURGERS ARTESANAIS</span></div>
+      <div>⚡ <span>FEITO NA HORA</span></div>
+    </section>
+
+    <section class="menu-section" id="cardapio">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">ESCOLHA O SEU FAVORITO</span>
+          <h2>EXPLORE NOSSO <span>CARDÁPIO.</span></h2>
+        </div>
+
+        <p>
+          Cada detalhe importa.<br>
+          Escolha, personalize e aproveite.
+        </p>
+      </div>
+
+      <div class="category-list" id="categories">
+        <button class="category active" data-category="todos">TODOS</button>
+        <button class="category" data-category="classicos">CLÁSSICOS</button>
+        <button class="category" data-category="especiais">ESPECIAIS</button>
+        <button class="category" data-category="acompanhamentos">ACOMPANHAMENTOS</button>
+        <button class="category" data-category="bebidas">BEBIDAS</button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Produtos carregados pelo JavaScript -->
+      </div>
+
+    </section>
+
+    <section class="about-section" id="sobre">
+      <span class="eyebrow">WELCOME TO JP BURGUER</span>
+      <h2>GOOD FOOD.<br><span>GOOD MOMENTS.</span></h2>
+      <p>Mais que matar a fome, queremos fazer parte dos bons momentos.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <a href="#inicio" class="footer-brand">JP<span>.</span> BURGUER</a>
+    <p>SEU PEDIDO. SEU MOMENTO.</p>
+    <span>© 2026 JP BURGUER</span>
+  </footer>
+
+  <!-- Carrinho -->
+  <div class="modal-overlay" id="cartOverlay"></div>
+
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <div>
+        <span class="eyebrow">SEU PEDIDO</span>
+        <h2>MEU CARRINHO<span>.</span></h2>
+      </div>
+      <button class="close-button" id="closeCart">✕</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <div class="empty-cart">
+        <span>🛒</span>
+        <p>Seu carrinho está vazio.</p>
+        <small>Que tal escolher seu primeiro burger?</small>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>TOTAL DO PEDIDO</span>
+        <strong id="cartTotal">R$ 0,00</strong>
+      </div>
+      <button class="checkout-button" id="checkoutButton" disabled>
+        FINALIZAR PEDIDO <span>→</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Finalização -->
+  <div class="checkout-overlay" id="checkoutOverlay">
+    <div class="checkout-modal">
+      <button class="close-button checkout-close" id="closeCheckout">✕</button>
+
+      <span class="eyebrow">SÓ FALTA UMA COISA</span>
+      <h2>IDENTIFIQUE SEU <span>PEDIDO.</span></h2>
+      <p>Informe seu nome para que possamos identificar seu pedido.</p>
+
+      <form id="checkoutForm">
+        <label for="customerName">SEU NOME</label>
+        <input
+          type="text"
+          id="customerName"
+          placeholder="Digite seu nome"
+          maxlength="50"
+          required
+        >
+
+        <label for="orderNote">OBSERVAÇÕES (OPCIONAL)</label>
+        <textarea
+          id="orderNote"
+          placeholder="Alguma observação sobre seu pedido?"
+          maxlength="300"
+        ></textarea>
+
+        <button type="submit" class="checkout-button">
+          CONFIRMAR PEDIDO →
+        </button>
+      </form>
+
+      <div id="orderFeedback" class="order-feedback"></div>
+    </div>
+  </div>
+
+  <script src="./assets/js/menu.js"></script>
+  <script src="./assets/js/cart.js"></script>
+  <script src="./assets/js/checkout.js"></script>
+  <script src="./assets/js/app.js"></script>
+
+</body>
+</html>
+
