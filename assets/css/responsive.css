@@ -1,20 +1,17 @@
-/* Layout pensado primeiro para celulares */
 @media(max-width:360px){
-  .menu-section{padding-left:10px;padding-right:10px}
-  .product-grid{gap:9px}
-  .product-info{padding:8px}
-  .product-info h3{font-size:19px}
-  .product-info p{font-size:8px;min-height:48px}
-  .product-price{font-size:14px}
-  .add-button{font-size:8px;padding:9px 3px}
-  .menu-intro h1{font-size:32px}
+  .topbar{padding:0 15px}
+  .welcome{margin:12px 10px 23px;padding:21px 15px 16px;min-height:188px}
+  .welcome-copy{max-width:72%}
+  .welcome h1{font-size:26px}
+  .welcome-art{right:-38px;width:48%;height:135px}
+  .menu-section{padding-left:11px;padding-right:11px}
+  .product-grid{gap:17px 9px}
+  .product-info h3{font-size:14px}
+  .product-info p{font-size:8px;min-height:40px}
+  .product-price{font-size:12px}
+  .add-button{width:29px;height:29px;flex-basis:29px}
+  .item-hint{font-size:6px}
 }
-@media(min-width:431px){
-  body{box-shadow:0 0 50px rgba(0,0,0,.4)}
-}
-@media(max-height:650px){
-  .cover-screen{min-height:500px}
-  .cover-brand{top:20px}
-  .cover-brand strong{font-size:55px}
-  .cover-enter{bottom:18px}
+@media(min-width:521px){
+  .app-shell{box-shadow:0 0 45px #0000000a}
 }
