@@ -137,7 +137,7 @@ button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transpar
 /* CAPA INICIAL — JP BURGUER */
 [hidden]{display:none!important}
 body{ text-transform:uppercase; }
-.landing-screen{position:fixed;z-index:100;inset:0;min-height:100svh;overflow:hidden;background:#17120f url("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=2200&q=90") center 52%/cover no-repeat;color:#fff}
+.landing-screen{position:fixed;z-index:100;inset:0;min-height:100svh;overflow:hidden;background-color:#17120f;background-image:url("https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=2200"),url("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=2200&q=90");background-position:center 52%;background-size:cover;background-repeat:no-repeat;color:#fff}
 .landing-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,8,7,.88) 0%,rgba(10,8,7,.65) 43%,rgba(10,8,7,.12) 100%),linear-gradient(0deg,rgba(0,0,0,.68),transparent 35%)}
 .landing-content{position:relative;z-index:1;width:100%;height:100svh;max-width:1440px;margin:auto;padding:clamp(25px,5vw,68px);display:flex;flex-direction:column;justify-content:space-between}
 .landing-brand{display:flex;align-items:baseline;gap:10px;width:max-content;font:900 clamp(38px,5vw,58px)/.8 var(--display);letter-spacing:-4px}
