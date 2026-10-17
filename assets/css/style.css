@@ -709,3 +709,34 @@ body{padding-bottom:104px}
 @keyframes jpSlideExitPrev{
   to{opacity:0;transform:translateX(34px) scale(.78);filter:blur(5px)}
 }
+
+
+/* CARDÁPIO PÚBLICO — SOMENTE VISUALIZAÇÃO */
+.menu-app .topbar{
+  justify-content:center;
+}
+.menu-app .topbar .brand{
+  margin:0 auto;
+}
+.showcase-price{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:17px;
+}
+.showcase-price strong{
+  color:#fff5ec;
+  font:800 22px var(--display);
+  letter-spacing:-.4px;
+}
+.showcase-no-photo{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  color:rgba(255,255,255,.22);
+  font:900 34px var(--display);
+  letter-spacing:5px;
+  border:1px solid rgba(255,255,255,.06);
+  background:radial-gradient(circle,rgba(221,102,43,.12),transparent 68%);
+}
