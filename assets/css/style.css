@@ -942,3 +942,52 @@ body{padding-bottom:104px}
   .menu-app #categories .category{font-size:11px!important}
   .menu-app .showcase-details h2{font-size:27px!important;font-weight:900!important}
 }
+
+
+/* BOTÃO DE ACESSO AO PAINEL ADMINISTRATIVO */
+.menu-app a.admin-access{
+  position:fixed!important;
+  z-index:30!important;
+  right:16px!important;
+  bottom:16px!important;
+  width:34px!important;
+  height:34px!important;
+  display:grid!important;
+  place-items:center!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid rgba(239,135,76,.42)!important;
+  border-radius:50%!important;
+  background:rgba(18,12,9,.88)!important;
+  color:rgba(244,157,105,.78)!important;
+  opacity:.72!important;
+  box-shadow:0 2px 12px rgba(0,0,0,.28)!important;
+  text-decoration:none!important;
+  transition:opacity .2s,background .2s,border-color .2s,transform .2s!important;
+}
+.menu-app a.admin-access svg{
+  display:block!important;
+  width:17px!important;
+  height:17px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.5!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+.menu-app a.admin-access:hover,
+.menu-app a.admin-access:focus-visible{
+  opacity:1!important;
+  border-color:#f18a49!important;
+  background:#28160e!important;
+  transform:scale(1.06)!important;
+  outline:none!important;
+}
+@media(max-width:600px){
+  .menu-app a.admin-access{
+    right:13px!important;
+    bottom:13px!important;
+    width:32px!important;
+    height:32px!important;
+  }
+}
