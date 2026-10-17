@@ -1025,3 +1025,28 @@ body{padding-bottom:104px}
     max-height:64px!important;
   }
 }
+
+
+/* LOGO DO CARDÁPIO — MAIS ESPAÇO SUPERIOR */
+.menu-app .topbar{
+  padding-top:12px!important;
+  padding-bottom:5px!important;
+}
+.menu-app .topbar .menu-brand-logo{
+  padding-top:7px!important;
+}
+.menu-app .topbar .menu-brand-logo img{
+  max-height:68px!important;
+}
+@media(max-width:600px){
+  .menu-app .topbar{
+    padding-top:10px!important;
+    padding-bottom:4px!important;
+  }
+  .menu-app .topbar .menu-brand-logo{
+    padding-top:6px!important;
+  }
+  .menu-app .topbar .menu-brand-logo img{
+    max-height:60px!important;
+  }
+}
