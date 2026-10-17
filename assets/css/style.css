@@ -376,3 +376,44 @@ a.admin-access:hover,a.admin-access:focus-visible{opacity:.35!important;outline:
   .landing-logo{transform:translate(-50%,0)}
   .landing-burger{transform:translate(-50%,-50%)}
 }
+
+
+/* TELA INICIAL — FOTO LOCAL DO BURGER */
+.landing-screen{
+  background-color:#090707;
+  background-image:url("./images/BURGUER.jpg");
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+.landing-screen::before{display:none;content:none}
+.landing-shade{
+  background:linear-gradient(180deg,rgba(0,0,0,.48) 0%,rgba(0,0,0,.08) 42%,rgba(0,0,0,.38) 100%);
+}
+.landing-logo{
+  top:clamp(16px,3.5vh,38px);
+  left:50%;
+  width:min(30vw,250px);
+  max-width:250px;
+  max-height:24svh;
+  transform:translate(-50%,10px) scale(.98);
+}
+.landing-menu-button{
+  right:clamp(20px,4vw,48px);
+  bottom:clamp(18px,3.5vw,34px);
+  border-color:rgba(255,255,255,.28);
+  background:rgba(0,0,0,.18);
+  color:rgba(255,255,255,.82);
+}
+.landing-menu-button span{display:none}
+.landing-menu-button:hover{
+  border-color:rgba(255,255,255,.48);
+  background:rgba(0,0,0,.3);
+  color:#fff;
+  transform:none;
+}
+@media(max-width:600px){
+  .landing-screen{background-position:center center}
+  .landing-logo{top:20px;width:min(38vw,170px);max-height:20svh}
+  .landing-menu-button{right:18px;bottom:18px}
+}
