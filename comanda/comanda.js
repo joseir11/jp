@@ -11,11 +11,20 @@
   let activeCategory = "todos";
   let draft = new Map();
   let channel = null;
+  let listChannel = null;
   let busy = false;
 
   function message(id,text,error=true){$(id).textContent=text;$(id).style.color=error?"#f2a17b":"#8ac99b";}
-  function showOpen(){ $("openScreen").hidden=false; $("comandaScreen").hidden=true; refreshOpenComandas(); }
+  function showOpen(){ $("openScreen").hidden=false; $("comandaScreen").hidden=true; subscribeOpenList(); refreshOpenComandas(); }
   function showComanda(){ $("openScreen").hidden=true; $("comandaScreen").hidden=false; }
+
+  function subscribeOpenList(){
+    if(listChannel)return;
+    listChannel=db.channel("jp-open-comandas-live")
+      .on("postgres_changes",{event:"*",schema:"public",table:"comandas"},()=>refreshOpenComandas())
+      .on("postgres_changes",{event:"*",schema:"public",table:"orders"},()=>refreshOpenComandas())
+      .subscribe();
+  }
 
   async function refreshOpenComandas(){
     const host=$("openComandasList");
