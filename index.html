@@ -23,8 +23,7 @@
   <main class="app-shell menu-app" id="menuApp" hidden>
     <header class="topbar">
       <a class="brand" href="#topo" aria-label="JP Burguer início"><span class="brand-mark">JP<span>.</span></span><span class="brand-name">BURGUER</span></a>
-      <div class="topbar-actions"><button class="comanda-access" id="openComanda" type="button" aria-label="Minha comanda" title="Minha comanda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div>
-      <button class="top-cart" id="openCart" aria-label="Abrir sacola"><span class="bag-icon"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M4.5 14.2C5.2 8.8 9.8 5 16 5s10.8 3.8 11.5 9.2H4.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m10 9.1.8.2m5-1.2.8.2m4.4 1.8.8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="m4.8 15.2 3 1.5 2.5-1.3 3 1.3 2.7-1.3 2.8 1.3 2.7-1.3 2.5 1.3 3-1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.2 18h21.6v4.1c0 1.1-.9 2-2 2H7.2c-1.1 0-2-.9-2-2V18Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 26h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="top-cart-count" id="cartCount">0</span></button>
+      
     </header>
     <section class="menu-section" id="cardapio">
       <div class="section-title"><div><span class="section-kicker">ESCOLHA E APROVEITE</span><h2>Nosso cardápio<span>.</span></h2></div></div>
@@ -33,31 +32,13 @@
     </section>
     <footer class="app-footer"><span class="footer-logo">JP<span>.</span></span><span>Obrigado por escolher o JP BURGUER.</span></footer>
   </main>
-  <a class="admin-access" href="./admin.html" aria-label="Painel administrativo" title="Painel administrativo"><span aria-hidden="true">·</span></a>
-  <button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido" hidden><span class="floating-cart-icon"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M4.5 14.2C5.2 8.8 9.8 5 16 5s10.8 3.8 11.5 9.2H4.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m10 9.1.8.2m5-1.2.8.2m4.4 1.8.8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="m4.8 15.2 3 1.5 2.5-1.3 3 1.3 2.7-1.3 2.8 1.3 2.7-1.3 2.5 1.3 3-1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.2 18h21.6v4.1c0 1.1-.9 2-2 2H7.2c-1.1 0-2-.9-2-2V18Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 26h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="floating-cart-label">Ver meu pedido <small id="floatingCartCount">0 itens</small></span><strong id="floatingCartTotal">R$ 0,00</strong><span class="floating-cart-arrow">→</span></button>
-  <div class="comanda-overlay" id="comandaOverlay" aria-hidden="true">
-    <section class="comanda-panel" role="dialog" aria-modal="true" aria-labelledby="comandaTitle">
-      <div class="comanda-panel-header">
-        <div><span class="drawer-kicker">ACOMPANHE SEU CONSUMO</span><h2 id="comandaTitle">Minha comanda<span>.</span></h2><p id="comandaSubtitle">Consulte seus pedidos e o total acumulado.</p></div>
-        <button class="close-button" id="closeComanda" type="button" aria-label="Fechar">×</button>
-      </div>
-      <div class="comanda-live"><span class="status-dot"></span> Atualização automática</div>
-      <div id="comandaContent" class="comanda-content"><p class="comanda-loading">Carregando sua comanda...</p></div>
-    </section>
-  </div>
-  <div class="modal-overlay" id="cartOverlay"></div>
-  <aside class="cart-drawer" id="cartDrawer" aria-label="Meu pedido">
-    <div class="drawer-header"><div><span class="drawer-kicker">SUA SELEÇÃO</span><h2>Meu pedido<span>.</span></h2></div><button class="close-button" id="closeCart" aria-label="Fechar carrinho">×</button></div>
-    <div class="cart-items" id="cartItems"><div class="empty-cart"><span class="empty-bag"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M4.5 14.2C5.2 8.8 9.8 5 16 5s10.8 3.8 11.5 9.2H4.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m10 9.1.8.2m5-1.2.8.2m4.4 1.8.8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="m4.8 15.2 3 1.5 2.5-1.3 3 1.3 2.7-1.3 2.8 1.3 2.7-1.3 2.5 1.3 3-1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.2 18h21.6v4.1c0 1.1-.9 2-2 2H7.2c-1.1 0-2-.9-2-2V18Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 26h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><p>Sua sacola está vazia.</p><small>Adicione seus favoritos para começar.</small></div></div>
-    <div class="cart-footer"><div class="cart-total"><span>Total do pedido</span><strong id="cartTotal">R$ 0,00</strong></div><button class="checkout-button" id="checkoutButton" disabled>CONTINUAR <span>→</span></button></div>
+<button class="floating-cart" id="floatingCart" type="button" aria-label="Ver meu pedido" hidden><span class="floating-cart-icon"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M4.5 14.2C5.2 8.8 9.8 5 16 5s10.8 3.8 11.5 9.2H4.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m10 9.1.8.2m5-1.2.8.2m4.4 1.8.8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="m4.8 15.2 3 1.5 2.5-1.3 3 1.3 2.7-1.3 2.8 1.3 2.7-1.3 2.5 1.3 3-1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.2 18h21.6v4.1c0 1.1-.9 2-2 2H7.2c-1.1 0-2-.9-2-2V18Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 26h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="floating-cart-label">Ver meu pedido <small id="floatingCartCount">0 itens</small></span><strong id="floatingCartTotal">R$ 0,00</strong><span class="floating-cart-arrow">→</span></button>
+<div class="cart-footer"><div class="cart-total"><span>Total do pedido</span><strong id="cartTotal">R$ 0,00</strong></div><button class="checkout-button" id="checkoutButton" disabled>CONTINUAR <span>→</span></button></div>
   </aside>
-  <div class="checkout-overlay" id="checkoutOverlay"><div class="checkout-modal"><button class="close-button checkout-close" id="closeCheckout" aria-label="Fechar">×</button><span class="drawer-kicker">SÓ MAIS UM PASSO</span><h2>Quem está pedindo<span>?</span></h2><p>Digite seu nome para identificarmos seu pedido.</p><form id="checkoutForm"><label for="customerName">SEU NOME</label><input type="text" id="customerName" placeholder="Como podemos te chamar?" maxlength="50" required><div id="comandaInfo" class="order-feedback" hidden></div><label for="orderNote">OBSERVAÇÃO <small>OPCIONAL</small></label><textarea id="orderNote" placeholder="Algum detalhe sobre seu pedido?" maxlength="300"></textarea><button type="submit" class="checkout-button">CONFIRMAR PEDIDO <span>→</span></button></form><div id="orderFeedback" class="order-feedback"></div></div></div>
+</div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./assets/js/supabase.js"></script>
   <script src="./assets/js/menu.js"></script>
-  <script src="./assets/js/cart.js"></script>
-  <script src="./assets/js/checkout.js"></script>
-  <script src="./assets/js/comanda.js"></script>
   <script src="./assets/js/app.js"></script>
 </body>
 </html>
