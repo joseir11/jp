@@ -274,3 +274,105 @@ a.admin-access:hover,a.admin-access:focus-visible{opacity:.35!important;outline:
 @media(prefers-reduced-motion:reduce){
   .landing-logo,.landing-menu-button{animation:none;opacity:1;transform:none}
 }
+
+/* ABERTURA JP HOUSE — LOGO NO TOPO E BURGER EM DESTAQUE */
+.landing-screen{
+  isolation:isolate;
+  background:#090707;
+  background-image:radial-gradient(ellipse at 50% 52%,#241a16 0%,#100d0c 56%,#070606 100%);
+}
+.landing-screen::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:-24%;
+  top:37%;
+  width:150%;
+  height:34%;
+  transform:rotate(-30deg);
+  transform-origin:center;
+  background:linear-gradient(90deg,
+    rgba(226,105,42,0) 0%,
+    rgba(226,105,42,.12) 19%,
+    rgba(235,125,59,.34) 49%,
+    rgba(226,105,42,.15) 78%,
+    rgba(226,105,42,0) 100%);
+  filter:blur(16px);
+  pointer-events:none;
+}
+.landing-shade{
+  z-index:1;
+  background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.05) 45%,rgba(0,0,0,.38) 100%);
+}
+.landing-content{
+  z-index:2;
+  display:block;
+  padding:0;
+}
+.landing-logo{
+  position:absolute;
+  z-index:3;
+  top:clamp(16px,3.5vh,38px);
+  left:50%;
+  width:min(30vw,250px);
+  max-width:250px;
+  max-height:24svh;
+  height:auto;
+  object-fit:contain;
+  transform:translate(-50%,10px) scale(.98);
+  opacity:0;
+  animation:jpLogoEnter 1s cubic-bezier(.2,.7,.2,1) .12s forwards;
+}
+.landing-burger{
+  position:absolute;
+  z-index:2;
+  left:50%;
+  top:53%;
+  width:min(66vw,700px);
+  height:min(52svh,470px);
+  transform:translate(-50%,-50%);
+  object-fit:contain;
+  border-radius:10px;
+  filter:drop-shadow(0 24px 36px rgba(0,0,0,.55));
+  opacity:0;
+  animation:jpBurgerEnter 1.1s cubic-bezier(.2,.7,.2,1) .18s forwards;
+}
+.landing-menu-button{
+  z-index:4;
+  right:clamp(20px,4vw,48px);
+  bottom:clamp(18px,3.5vw,34px);
+}
+@keyframes jpLogoEnter{
+  to{opacity:1;transform:translate(-50%,0) scale(1)}
+}
+@keyframes jpBurgerEnter{
+  to{opacity:1;transform:translate(-50%,-50%)}
+}
+@media(max-width:600px){
+  .landing-screen::before{
+    top:39%;
+    left:-45%;
+    width:190%;
+    height:28%;
+    filter:blur(13px);
+  }
+  .landing-logo{
+    top:20px;
+    width:min(38vw,170px);
+    max-height:20svh;
+  }
+  .landing-burger{
+    top:51%;
+    width:90vw;
+    height:48svh;
+  }
+  .landing-menu-button{right:18px;bottom:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .landing-logo,.landing-burger,.landing-menu-button{
+    animation:none;
+    opacity:1;
+  }
+  .landing-logo{transform:translate(-50%,0)}
+  .landing-burger{transform:translate(-50%,-50%)}
+}
