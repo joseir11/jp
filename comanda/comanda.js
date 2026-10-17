@@ -221,6 +221,16 @@
     }catch(error){alert(error.message||"Não foi possível fechar a comanda.");button.disabled=false;}
   });
 
+  $("backToListButton").addEventListener("click",()=>{
+    if(channel)db.removeChannel(channel);
+    channel=null;
+    comanda=null;
+    draft.clear();
+    $("orderNote").value="";
+    renderDraft();
+    showOpen();
+  });
+
   $("newComandaButton").addEventListener("click",()=>{
     if(comanda?.status==="ABERTA"&&!confirm("Esta comanda ainda está aberta. Deseja sair e abrir outra?"))return;
     if(channel)db.removeChannel(channel);
@@ -232,10 +242,8 @@
   async function init(){
     try{await loadCatalog();}
     catch(error){console.error(error);$("productList").innerHTML='<p class="empty">Não foi possível carregar os produtos. Verifique a conexão.</p>';}
-    if(comandaId){
-      try{await loadComanda();subscribe();}
-      catch(error){console.warn(error);sessionStorage.removeItem(STORAGE_KEY);comandaId=null;showOpen();}
-    }else showOpen();
+    // Sempre inicia pela lista: a última comanda usada não deve esconder as demais.
+    showOpen();
     renderDraft();
   }
   init();
