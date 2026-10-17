@@ -318,4 +318,41 @@ GRANT EXECUTE ON FUNCTION public.delete_open_comanda(uuid) TO anon, authenticate
 GRANT EXECUTE ON FUNCTION public.update_comanda_item_quantity(uuid, integer) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.delete_comanda_item(uuid) TO anon, authenticated;
 
+
+-- Monta o cupom somente com itens das categorias CLÁSSICOS e ESPECIAIS.
+CREATE OR REPLACE FUNCTION public.get_production_coupon(p_order_id uuid)
+RETURNS jsonb
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path TO ''
+AS $function$
+  SELECT jsonb_build_object(
+    'order_number', o.order_number,
+    'comanda_number', c.comanda_number,
+    'customer_name', c.customer_name,
+    'items', COALESCE((
+      SELECT jsonb_agg(
+        jsonb_build_object(
+          'product_name', oi.product_name,
+          'quantity', oi.quantity,
+          'description', COALESCE(p.description, '')
+        ) ORDER BY oi.created_at
+      )
+      FROM public.order_items oi
+      LEFT JOIN public.products p ON p.id = oi.product_id
+      LEFT JOIN public.categories cat ON cat.id = p.category_id
+      WHERE oi.order_id = o.id
+        AND (
+          upper(trim(COALESCE(cat.name, ''))) IN ('CLÁSSICOS', 'ESPECIAIS')
+          OR lower(trim(COALESCE(cat.slug, ''))) IN ('classicos', 'especiais')
+        )
+    ), '[]'::jsonb)
+  )
+  FROM public.orders o
+  JOIN public.comandas c ON c.id = o.comanda_id
+  WHERE o.id = p_order_id;
+$function$;
+
+GRANT EXECUTE ON FUNCTION public.get_production_coupon(uuid) TO anon, authenticated;
+
 NOTIFY pgrst, 'reload schema';
