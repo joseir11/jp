@@ -14,8 +14,24 @@
   let busy = false;
 
   function message(id,text,error=true){$(id).textContent=text;$(id).style.color=error?"#f2a17b":"#8ac99b";}
-  function showOpen(){ $("openScreen").hidden=false; $("comandaScreen").hidden=true; }
+  function showOpen(){ $("openScreen").hidden=false; $("comandaScreen").hidden=true; refreshOpenComandas(); }
   function showComanda(){ $("openScreen").hidden=true; $("comandaScreen").hidden=false; }
+
+  async function refreshOpenComandas(){
+    const host=$("openComandasList");
+    if(!host)return;
+    host.innerHTML='<p class="empty">Carregando comandas abertas...</p>';
+    const {data,error}=await db.rpc("list_open_comandas");
+    if(error){host.innerHTML='<p class="empty">Não foi possível carregar as comandas.</p>';return;}
+    const rows=data||[];
+    host.innerHTML=rows.length?rows.map(c=>'<article class="open-comanda-row"><button class="open-comanda-select" type="button" data-open-comanda="'+c.id+'"><span><b>COMANDA #'+String(c.comanda_number).padStart(3,"0")+'</b><small>'+safe(c.customer_name)+'</small></span><strong>'+money(c.total)+'</strong></button><button class="delete-comanda" type="button" data-delete-comanda="'+c.id+'" aria-label="Excluir comanda">EXCLUIR</button></article>').join(""):'<p class="empty">Nenhuma comanda aberta no momento.</p>';
+  }
+
+  async function selectComanda(id){
+    if(channel)db.removeChannel(channel);
+    comandaId=id;sessionStorage.setItem(STORAGE_KEY,id);draft.clear();renderDraft();
+    await loadComanda();subscribe();
+  }
 
   async function openComanda(name){
     message("openMessage","Abrindo comanda...",false);
@@ -72,7 +88,7 @@
     const orders=Array.isArray(comanda.orders)?comanda.orders:[];
     $("orderCount").textContent=orders.length+" pedido(s)";
     $("ordersList").innerHTML=orders.length?orders.map(order=>'<article class="order-history"><div class="order-history-head"><span>PEDIDO #'+String(order.order_number).padStart(3,"0")+'</span><strong>'+money(order.total)+'</strong></div><small>'+new Date(order.created_at).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})+'</small>'+
-      (order.items||[]).map(item=>'<div class="order-history-line"><span>'+Number(item.quantity)+'× '+safe(item.product_name)+'</span><strong>'+money(item.subtotal)+'</strong></div>').join("")+
+      (order.items||[]).map(item=>'<div class="order-history-line"><span>'+safe(item.product_name)+'</span><div class="saved-item-controls"><button type="button" data-item-dec="'+item.item_id+'" data-qty="'+item.quantity+'" aria-label="Diminuir">−</button><b>'+Number(item.quantity)+'×</b><button type="button" data-item-inc="'+item.item_id+'" data-qty="'+item.quantity+'" aria-label="Aumentar">+</button><strong>'+money(item.subtotal)+'</strong><button type="button" class="saved-item-remove" data-item-delete="'+item.item_id+'" aria-label="Excluir item">×</button></div></div>').join("")+
       (order.notes?'<small>OBS.: '+safe(order.notes)+'</small>':"")+'</article>').join(""):'<p class="empty">Nenhum pedido lançado.</p>';
     const closed=comanda.status!=="ABERTA";
     $("closedNotice").hidden=!closed;
@@ -106,6 +122,34 @@
     try{await openComanda($("customerName").value);message("openMessage","Comanda aberta!",false);}
     catch(error){message("openMessage",error.message||"Erro ao abrir comanda.");}
     finally{button.disabled=false;}
+  });
+
+  $("openComandasList").addEventListener("click",async event=>{
+    const openBtn=event.target.closest("[data-open-comanda]");
+    const delBtn=event.target.closest("[data-delete-comanda]");
+    if(openBtn){try{await selectComanda(openBtn.dataset.openComanda);}catch(error){alert(error.message||"Não foi possível abrir a comanda.");}return;}
+    if(delBtn){
+      if(!confirm("Excluir definitivamente esta comanda aberta e todos os pedidos e itens vinculados? Esta ação não poderá ser desfeita."))return;
+      delBtn.disabled=true;
+      const {error}=await db.rpc("delete_open_comanda",{p_comanda_id:delBtn.dataset.deleteComanda});
+      if(error){alert(error.message||"Não foi possível excluir a comanda.");delBtn.disabled=false;return;}
+      if(comandaId===delBtn.dataset.deleteComanda){sessionStorage.removeItem(STORAGE_KEY);comandaId=null;comanda=null;draft.clear();if(channel)db.removeChannel(channel);}
+      refreshOpenComandas();
+    }
+  });
+
+  $("ordersList").addEventListener("click",async event=>{
+    const btn=event.target.closest("[data-item-inc],[data-item-dec],[data-item-delete]");
+    if(!btn||comanda?.status!=="ABERTA")return;
+    const itemId=btn.dataset.itemInc||btn.dataset.itemDec||btn.dataset.itemDelete;
+    const current=Number(btn.dataset.qty||0);
+    let rpc,args;
+    if(btn.dataset.itemDelete!==undefined){rpc="delete_comanda_item";args={p_item_id:itemId};}
+    else {const qty=current+(btn.dataset.itemInc!==undefined?1:-1);if(qty<1){rpc="delete_comanda_item";args={p_item_id:itemId};}else{rpc="update_comanda_item_quantity";args={p_item_id:itemId,p_quantity:qty};}}
+    btn.disabled=true;
+    const {error}=await db.rpc(rpc,args);
+    if(error){alert(error.message||"Não foi possível atualizar o item.");btn.disabled=false;return;}
+    await loadComanda();refreshOpenComandas();
   });
 
   $("categoryFilters").addEventListener("click",event=>{
@@ -148,6 +192,7 @@
       if(error)throw error;
       draft.clear();$("orderNote").value="";
       await loadComanda();
+      refreshOpenComandas();
       message("draftMessage","Pedido adicionado à comanda.",false);
     }catch(error){message("draftMessage",error.message||"Não foi possível registrar o pedido.");}
     finally{busy=false;renderDraft();renderComanda();}
@@ -161,6 +206,7 @@
       const {error}=await db.rpc("close_comanda_public",{p_comanda_id:comandaId});
       if(error)throw error;
       await loadComanda();
+      refreshOpenComandas();
     }catch(error){alert(error.message||"Não foi possível fechar a comanda.");button.disabled=false;}
   });
 
