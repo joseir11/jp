@@ -76,9 +76,15 @@ function renderProducts(direction="next",animate=false){
 function changeSlide(direction){
   const products=productsForCategory();
   if(products.length<2||slideBusy)return;
-  slideDirection=direction;
-  currentProductIndex+=direction==="next"?1:-1;
-  renderProducts(direction,true);
+  slideBusy=true;
+  const current=productGrid.querySelector(".showcase-product");
+  if(current){
+    current.classList.add(direction==="next"?"slide-exit-next":"slide-exit-prev");
+  }
+  setTimeout(()=>{
+    currentProductIndex+=direction==="next"?1:-1;
+    renderProducts(direction,true);
+  },180);
 }
 categories.addEventListener("click",event=>{
   const button=event.target.closest("[data-category]");
