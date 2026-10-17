@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100b08">
+  <title>Comandas | JP BURGUER</title>
+  <meta name="description" content="Abertura e gerenciamento de comandas JP BURGUER.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./comanda.css">
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a href="../index.html" class="brand"><img src="../assets/images/JP.png" alt="JP House Burguer & Beer"></a>
+      <span class="header-label">GESTÃO DE COMANDAS</span>
+    </header>
+
+    <section id="openScreen" class="open-screen">
+      <div class="eyebrow">JP HOUSE BURGUER & BEER</div>
+      <h1>ABRIR <span>COMANDA.</span></h1>
+      <p>Informe o nome do cliente para começar.</p>
+      <form id="openForm" class="open-form">
+        <label for="customerName">NOME DO CLIENTE</label>
+        <input id="customerName" type="text" maxlength="100" minlength="2" placeholder="Ex.: João" autocomplete="off" required>
+        <button class="primary" type="submit">ABRIR COMANDA <span>→</span></button>
+      </form>
+      <div id="openMessage" class="message" role="status"></div>
+    </section>
+
+    <section id="comandaScreen" class="comanda-screen" hidden>
+      <div class="comanda-heading">
+        <div><div class="eyebrow">COMANDA EM ANDAMENTO</div><h1 id="comandaTitle">COMANDA <span>#000</span></h1><p id="customerLabel"></p></div>
+        <button id="newComandaButton" class="ghost" type="button">NOVA COMANDA</button>
+      </div>
+
+      <div class="workspace">
+        <section class="catalog">
+          <div class="section-heading"><div><span class="eyebrow">CARDÁPIO</span><h2>Adicionar itens</h2></div><span id="productCount" class="muted"></span></div>
+          <div id="categoryFilters" class="filters"></div>
+          <div id="productList" class="product-list"><p class="muted">Carregando produtos...</p></div>
+        </section>
+
+        <aside class="side-column">
+          <section class="draft-card">
+            <div class="section-heading"><div><span class="eyebrow">NOVO PEDIDO</span><h2>Itens selecionados</h2></div><span id="draftCount" class="count">0</span></div>
+            <div id="draftList" class="draft-list"><p class="empty">Selecione produtos no cardápio.</p></div>
+            <label class="note-label" for="orderNote">OBSERVAÇÃO (OPCIONAL)</label>
+            <textarea id="orderNote" maxlength="500" rows="2" placeholder="Ex.: sem cebola, ponto da carne..."></textarea>
+            <div class="draft-total"><span>Subtotal deste pedido</span><strong id="draftTotal">R$ 0,00</strong></div>
+            <button id="sendOrderButton" class="primary" type="button" disabled>ADICIONAR À COMANDA</button>
+            <div id="draftMessage" class="message" role="status"></div>
+          </section>
+
+          <section class="history-card">
+            <div class="section-heading"><div><span class="eyebrow">REGISTRO</span><h2>Pedidos lançados</h2></div><span id="orderCount" class="muted">0</span></div>
+            <div id="ordersList" class="orders-list"><p class="empty">Nenhum pedido lançado.</p></div>
+            <div class="grand-total"><span>TOTAL DA COMANDA</span><strong id="grandTotal">R$ 0,00</strong></div>
+            <button id="closeComandaButton" class="finish-button" type="button">FECHAR COMANDA</button>
+          </section>
+        </aside>
+      </div>
+      <div id="closedNotice" class="closed-notice" hidden>Comanda fechada com sucesso.</div>
+    </section>
+    <footer><a href="../index.html">VOLTAR AO CARDÁPIO</a><span>JP BURGUER</span></footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/supabase.js"></script>
+  <script src="./comanda.js"></script>
+</body>
+</html>
