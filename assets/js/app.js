@@ -84,16 +84,30 @@ productGrid.addEventListener("click",event=>{
 
 async function loadMenu(){
   try{
-    const {data:cats,error:catError}=await window.supabaseClient.from("categories").select("id,name,slug,active,position").eq("active",true).order("position");
-    const {data:rows,error:prodError}=await window.supabaseClient.from("products").select("id,name,description,price,label,image_url,active,position,category_id,categories(slug)").eq("active",true).order("position");
-    if(catError||prodError)throw catError||prodError;
-    renderCategories(cats||[]);
-    window.MENU=(rows||[]).map(p=>({id:p.id,name:p.name,description:p.description||"",price:Number(p.price),label:p.label||"JP BURGUER",image:p.image_url||"",category:p.categories?.slug||""}));
+    // Reutiliza o mesmo padrão de consulta já validado no painel administrativo.
+    const [catRes,prodRes]=await Promise.all([
+      window.supabaseClient.from("categories").select("*").order("position"),
+      window.supabaseClient.from("products").select("*, categories(name,slug)").order("position").order("created_at",{ascending:false})
+    ]);
+    if(catRes.error)throw catRes.error;
+    if(prodRes.error)throw prodRes.error;
+    const cats=(catRes.data||[]).filter(c=>c.active);
+    const rows=(prodRes.data||[]).filter(p=>p.active);
+    renderCategories(cats);
+    window.MENU=rows.map(p=>({
+      id:p.id,
+      name:p.name,
+      description:p.description||"",
+      price:Number(p.price||0),
+      label:p.label||"JP BURGUER",
+      image:p.image_url||"",
+      category:p.categories?.slug||""
+    }));
     currentProductIndex=0;
     renderProducts();
   }catch(error){
     console.error("Falha ao carregar cardápio:",error);
-    productGrid.innerHTML='<p class="menu-loading">NÃO FOI POSSÍVEL CARREGAR O CARDÁPIO. TENTE ATUALIZAR A PÁGINA.</p>';
+    productGrid.innerHTML='<p class="menu-loading">NÃO FOI POSSÍVEL CARREGAR OS PRODUTOS. VERIFIQUE A CONEXÃO E TENTE NOVAMENTE.</p>';
   }
 }
 loadMenu();
