@@ -168,3 +168,26 @@ $function$;
 GRANT EXECUTE ON FUNCTION public.get_comanda_details_by_id(uuid) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.submit_order_to_comanda_by_id(uuid, jsonb, text) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.close_comanda_public(uuid) TO anon, authenticated;
+
+
+CREATE OR REPLACE FUNCTION public.open_comanda_public(p_customer_name text)
+RETURNS TABLE(comanda_id uuid, comanda_number bigint)
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO ''
+AS $function$
+BEGIN
+  IF p_customer_name IS NULL
+     OR length(trim(p_customer_name)) < 2
+     OR length(trim(p_customer_name)) > 100 THEN
+    RAISE EXCEPTION 'Informe um nome válido.';
+  END IF;
+
+  RETURN QUERY
+  INSERT INTO public.comandas (customer_name)
+  VALUES (trim(p_customer_name))
+  RETURNING public.comandas.id, public.comandas.comanda_number;
+END;
+$function$;
+
+GRANT EXECUTE ON FUNCTION public.open_comanda_public(text) TO anon, authenticated;
