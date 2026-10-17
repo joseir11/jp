@@ -381,7 +381,7 @@ a.admin-access:hover,a.admin-access:focus-visible{opacity:.35!important;outline:
 /* TELA INICIAL — FOTO LOCAL DO BURGER */
 .landing-screen{
   background-color:#090707;
-  background-image:url("./images/BURGUER.jpg");
+  background-image:url("../images/BURGUER.jpg");
   background-position:center center;
   background-size:cover;
   background-repeat:no-repeat;
