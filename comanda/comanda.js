@@ -33,7 +33,7 @@
     const {data,error}=await db.rpc("list_open_comandas");
     if(error){host.innerHTML='<p class="empty">Não foi possível carregar as comandas.</p>';return;}
     const rows=data||[];
-    host.innerHTML=rows.length?rows.map(c=>'<article class="open-comanda-row"><button class="open-comanda-select" type="button" data-open-comanda="'+c.id+'"><span><b>COMANDA #'+String(c.comanda_number).padStart(3,"0")+'</b><small>'+safe(c.customer_name)+'</small></span><strong>'+money(c.total)+'</strong></button><button class="delete-comanda" type="button" data-delete-comanda="'+c.id+'" aria-label="Excluir comanda">EXCLUIR</button></article>').join(""):'<p class="empty">Nenhuma comanda aberta no momento.</p>';
+    host.innerHTML=rows.length?rows.map(c=>'<article class="open-comanda-row"><button class="open-comanda-select" type="button" data-open-comanda="'+c.id+'"><span><strong class="open-comanda-name">'+safe(c.customer_name)+'</strong><small class="open-comanda-number">COMANDA #'+String(c.comanda_number).padStart(3,"0")+'</small></span><strong>'+money(c.total)+'</strong></button><button class="delete-comanda" type="button" data-delete-comanda="'+c.id+'" aria-label="Excluir comanda">EXCLUIR</button></article>').join(""):'<p class="empty">Nenhuma comanda aberta no momento.</p>';
   }
 
   async function selectComanda(id){
