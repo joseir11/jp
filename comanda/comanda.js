@@ -89,6 +89,26 @@
     $("sendOrderButton").disabled=!items.length||busy;
   }
 
+  function renderProductionCoupon(coupon){
+    const panel=$("productionCoupon");
+    if(!coupon||!Array.isArray(coupon.items)||!coupon.items.length){panel.hidden=true;return;}
+    const lines=[
+      "🍔 JP BURGUER","CUPOM DE PRODUÇÃO","━━━━━━━━━━━━━━━━━━",
+      "COMANDA: #"+String(coupon.comanda_number).padStart(3,"0"),
+      "CLIENTE: "+coupon.customer_name,
+      "PEDIDO: #"+String(coupon.order_number).padStart(3,"0"),
+      "━━━━━━━━━━━━━━━━━━",
+      ...coupon.items.flatMap(item=>[Number(item.quantity)+"x "+item.product_name,item.description?("   "+item.description):""].filter(Boolean)),
+      "━━━━━━━━━━━━━━━━━━"
+    ];
+    const text=lines.join("\n");
+    $("productionCouponText").textContent=text;
+    $("sendWhatsAppButton").onclick=()=>{
+      window.open("https://wa.me/5562996201030?text="+encodeURIComponent(text),"_blank","noopener,noreferrer");
+    };
+    panel.hidden=false;
+  }
+
   function renderComanda(){
     if(!comanda)return;
     $("comandaTitle").innerHTML='COMANDA <span>#'+String(comanda.comanda_number).padStart(3,"0")+'</span>';
@@ -197,13 +217,16 @@
     busy=true;renderDraft();message("draftMessage","Registrando pedido...",false);
     const items=[...draft.values()].map(item=>({product_id:item.id,quantity:item.quantity}));
     try{
-      const {error}=await db.rpc("submit_order_to_comanda_by_id",{
+      const {data:orderId,error}=await db.rpc("submit_order_to_comanda_by_id",{
         p_comanda_id:comandaId,p_items:items,p_note:$("orderNote").value.trim()||null
       });
       if(error)throw error;
       draft.clear();$("orderNote").value="";
       await loadComanda();
       refreshOpenComandas();
+      const {data:coupon,error:couponError}=await db.rpc("get_production_coupon",{p_order_id:orderId});
+      if(couponError)throw couponError;
+      renderProductionCoupon(coupon);
       message("draftMessage","Pedido adicionado à comanda.",false);
     }catch(error){message("draftMessage",error.message||"Não foi possível registrar o pedido.");}
     finally{busy=false;renderDraft();renderComanda();}
