@@ -991,3 +991,37 @@ body{padding-bottom:104px}
     height:32px!important;
   }
 }
+
+
+/* AJUSTE DE SETAS E LOGO — MAIS ESPAÇO NAS LATERAIS */
+.menu-app .showcase-arrow{
+  width:46px!important;
+  height:46px!important;
+  left:auto;
+  right:auto;
+  display:grid!important;
+  place-items:center!important;
+  padding:0 0 3px!important;
+  font-size:37px!important;
+  line-height:1!important;
+}
+.menu-app .showcase-prev{left:10px!important}
+.menu-app .showcase-next{right:10px!important}
+.menu-app .topbar .menu-brand-logo img{
+  max-width:174px!important;
+  max-height:72px!important;
+}
+@media(max-width:600px){
+  .menu-app .showcase-arrow{
+    width:42px!important;
+    height:42px!important;
+    font-size:35px!important;
+    padding-bottom:3px!important;
+  }
+  .menu-app .showcase-prev{left:9px!important}
+  .menu-app .showcase-next{right:9px!important}
+  .menu-app .topbar .menu-brand-logo img{
+    max-width:156px!important;
+    max-height:64px!important;
+  }
+}
