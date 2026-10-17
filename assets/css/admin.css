@@ -28,3 +28,70 @@
 .admin-delete-order{padding:9px 11px;border:1px solid #f0d5cc;border-radius:5px;background:#fff8f5;color:#b34c25;font-size:9px;font-weight:900;white-space:nowrap}
 .admin-delete-order:disabled{opacity:.55;cursor:wait}
 @media(max-width:650px){.admin-delete-order{width:100%}}
+
+/* Identidade e contraste do painel: tipografia somente em preto e laranja */
+.admin-body,
+.admin-shell,
+.admin-shell p,
+.admin-shell small,
+.admin-shell strong,
+.admin-shell span,
+.admin-shell label,
+.admin-shell h1,
+.admin-shell h2,
+.admin-shell h3,
+.admin-shell button,
+.admin-shell input,
+.admin-shell textarea,
+.admin-shell select,
+.admin-modal-card,
+.admin-order-card {
+  color: #171717;
+}
+.admin-shell .section-kicker,
+.admin-shell .admin-tag,
+.admin-shell .admin-login label,
+.admin-shell .admin-modal-card label,
+.admin-shell .admin-order-bottom label,
+.admin-shell .admin-order-item b,
+.admin-shell .admin-title-row h1 span,
+.admin-shell .admin-login h1 span,
+.admin-shell .admin-modal-card h2 span,
+.admin-shell .admin-tab.active,
+.admin-shell .admin-product-data small,
+.admin-shell .admin-order-total {
+  color: var(--orange);
+}
+.admin-shell .admin-login > p,
+.admin-shell .admin-title-row p,
+.admin-shell .admin-orders-caption,
+.admin-shell .admin-order-date,
+.admin-shell .admin-order-id,
+.admin-shell .admin-category-row small,
+.admin-shell .admin-product-data small,
+.admin-shell .admin-empty,
+.admin-shell .admin-orders-empty span {
+  color: #555;
+}
+.admin-shell .admin-tab:not(.active) {
+  color: #333;
+}
+.admin-shell .admin-order-note {
+  color: #171717;
+}
+.admin-shell .admin-order-note b {
+  color: var(--orange);
+}
+.admin-shell input::placeholder,
+.admin-shell textarea::placeholder {
+  color: #666;
+  opacity: 1;
+}
+.admin-shell .admin-secondary-button,
+.admin-shell .admin-product-actions button,
+.admin-shell .admin-category-row button,
+.admin-shell .admin-logout,
+.admin-shell .view-menu-link {
+  color: #171717;
+}
+
