@@ -874,3 +874,71 @@ body{padding-bottom:104px}
   .showcase-details p{font-size:11px;line-height:1.7}
   .showcase-price strong{font-size:21px}
 }
+
+
+/* AJUSTE FINO DO CABEÇALHO E TIPOGRAFIA DO CARDÁPIO */
+.menu-app .topbar{
+  height:62px!important;
+  min-height:62px!important;
+  padding:5px 14px!important;
+}
+.menu-app .topbar .menu-brand-logo{
+  width:auto!important;
+  height:auto!important;
+  max-width:116px!important;
+  max-height:50px!important;
+  flex:0 0 auto!important;
+  margin:0 auto!important;
+  overflow:visible!important;
+}
+.menu-app .topbar .menu-brand-logo img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:116px!important;
+  max-height:48px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+.menu-app #categories .category,
+.menu-app #categories .category:focus,
+.menu-app #categories .category:hover{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  border:0!important;
+  border-width:0!important;
+  border-style:none!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  padding:5px 0!important;
+  color:#d0c1b6!important;
+  font-family:var(--display)!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+  letter-spacing:.4px!important;
+  text-shadow:none!important;
+}
+.menu-app #categories .category.active{
+  color:#f18a49!important;
+  font-weight:900!important;
+  text-shadow:0 0 12px rgba(241,138,73,.2)!important;
+}
+.menu-app .showcase-details h2{
+  color:#fff9f3!important;
+  font-family:var(--display)!important;
+  font-size:clamp(26px,6vw,35px)!important;
+  font-weight:900!important;
+  line-height:1.08!important;
+  letter-spacing:-.8px!important;
+}
+.menu-app .app-footer{display:none!important}
+@media(max-width:600px){
+  .menu-app .topbar{height:58px!important;min-height:58px!important}
+  .menu-app .topbar .menu-brand-logo img{max-width:104px!important;max-height:43px!important}
+  .menu-app #categories .category{font-size:11px!important}
+  .menu-app .showcase-details h2{font-size:27px!important;font-weight:900!important}
+}
