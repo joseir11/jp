@@ -698,3 +698,14 @@ body{padding-bottom:104px}
   .slide-enter-next,.slide-enter-prev,.showcase-photo{animation:none!important}
   .showcase-photo{opacity:1;transform:none}
 }
+
+
+/* SAÍDA DO PRODUTO ATUAL — ZOOM OUT + DESLIZE */
+.slide-exit-next{animation:jpSlideExitNext .18s ease-in both}
+.slide-exit-prev{animation:jpSlideExitPrev .18s ease-in both}
+@keyframes jpSlideExitNext{
+  to{opacity:0;transform:translateX(-34px) scale(.78);filter:blur(5px)}
+}
+@keyframes jpSlideExitPrev{
+  to{opacity:0;transform:translateX(34px) scale(.78);filter:blur(5px)}
+}
