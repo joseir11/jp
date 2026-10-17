@@ -21,6 +21,7 @@ BEGIN
     'orders', COALESCE((
       SELECT jsonb_agg(
         jsonb_build_object(
+          'order_id', o.id,
           'order_number', o.order_number,
           'status', o.status,
           'total', o.total,
@@ -29,6 +30,7 @@ BEGIN
           'items', COALESCE((
             SELECT jsonb_agg(
               jsonb_build_object(
+                'item_id', oi.id,
                 'product_name', oi.product_name,
                 'unit_price', oi.unit_price,
                 'quantity', oi.quantity,
@@ -191,3 +193,129 @@ END;
 $function$;
 
 GRANT EXECUTE ON FUNCTION public.open_comanda_public(text) TO anon, authenticated;
+
+
+-- Lista todas as comandas abertas para a equipe.
+CREATE OR REPLACE FUNCTION public.list_open_comandas()
+RETURNS TABLE(id uuid, comanda_number bigint, customer_name text, total numeric, created_at timestamptz)
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path TO ''
+AS $function$
+  SELECT c.id, c.comanda_number, c.customer_name, c.total, c.created_at
+  FROM public.comandas c
+  WHERE c.status = 'ABERTA'
+  ORDER BY c.created_at DESC;
+$function$;
+
+-- Exclui uma comanda aberta e todos os pedidos/itens vinculados, sem gerar histórico.
+CREATE OR REPLACE FUNCTION public.delete_open_comanda(p_comanda_id uuid)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO ''
+AS $function$
+BEGIN
+  PERFORM 1 FROM public.comandas
+  WHERE id = p_comanda_id AND status = 'ABERTA'
+  FOR UPDATE;
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Comanda não encontrada ou não está aberta.';
+  END IF;
+
+  DELETE FROM public.order_items
+  WHERE order_id IN (SELECT id FROM public.orders WHERE comanda_id = p_comanda_id);
+  DELETE FROM public.orders WHERE comanda_id = p_comanda_id;
+  DELETE FROM public.comandas WHERE id = p_comanda_id AND status = 'ABERTA';
+  RETURN TRUE;
+END;
+$function$;
+
+-- Altera quantidade de item já lançado e recalcula os totais do pedido e da comanda.
+CREATE OR REPLACE FUNCTION public.update_comanda_item_quantity(p_item_id uuid, p_quantity integer)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO ''
+AS $function$
+DECLARE
+  v_order_id uuid;
+  v_comanda_id uuid;
+BEGIN
+  IF p_quantity IS NULL OR p_quantity < 1 OR p_quantity > 50 THEN
+    RAISE EXCEPTION 'A quantidade deve estar entre 1 e 50.';
+  END IF;
+
+  SELECT oi.order_id, o.comanda_id INTO v_order_id, v_comanda_id
+  FROM public.order_items oi
+  JOIN public.orders o ON o.id = oi.order_id
+  JOIN public.comandas c ON c.id = o.comanda_id
+  WHERE oi.id = p_item_id AND c.status = 'ABERTA'
+  FOR UPDATE OF oi, o, c;
+
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Item não encontrado ou comanda fechada.';
+  END IF;
+
+  UPDATE public.order_items
+  SET quantity = p_quantity, subtotal = unit_price * p_quantity
+  WHERE id = p_item_id;
+
+  UPDATE public.orders
+  SET total = (SELECT COALESCE(SUM(subtotal),0) FROM public.order_items WHERE order_id = v_order_id)
+  WHERE id = v_order_id;
+
+  UPDATE public.comandas
+  SET total = (SELECT COALESCE(SUM(total),0) FROM public.orders WHERE comanda_id = v_comanda_id)
+  WHERE id = v_comanda_id;
+
+  RETURN TRUE;
+END;
+$function$;
+
+-- Exclui item imediatamente; se era o último do pedido, remove também o pedido vazio.
+CREATE OR REPLACE FUNCTION public.delete_comanda_item(p_item_id uuid)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO ''
+AS $function$
+DECLARE
+  v_order_id uuid;
+  v_comanda_id uuid;
+BEGIN
+  SELECT oi.order_id, o.comanda_id INTO v_order_id, v_comanda_id
+  FROM public.order_items oi
+  JOIN public.orders o ON o.id = oi.order_id
+  JOIN public.comandas c ON c.id = o.comanda_id
+  WHERE oi.id = p_item_id AND c.status = 'ABERTA'
+  FOR UPDATE OF oi, o, c;
+
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Item não encontrado ou comanda fechada.';
+  END IF;
+
+  DELETE FROM public.order_items WHERE id = p_item_id;
+
+  IF NOT EXISTS (SELECT 1 FROM public.order_items WHERE order_id = v_order_id) THEN
+    DELETE FROM public.orders WHERE id = v_order_id;
+  ELSE
+    UPDATE public.orders
+    SET total = (SELECT COALESCE(SUM(subtotal),0) FROM public.order_items WHERE order_id = v_order_id)
+    WHERE id = v_order_id;
+  END IF;
+
+  UPDATE public.comandas
+  SET total = (SELECT COALESCE(SUM(total),0) FROM public.orders WHERE comanda_id = v_comanda_id)
+  WHERE id = v_comanda_id;
+
+  RETURN TRUE;
+END;
+$function$;
+
+GRANT EXECUTE ON FUNCTION public.list_open_comandas() TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.delete_open_comanda(uuid) TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.update_comanda_item_quantity(uuid, integer) TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.delete_comanda_item(uuid) TO anon, authenticated;
+
+NOTIFY pgrst, 'reload schema';
