@@ -19,7 +19,7 @@
 
   async function openComanda(name){
     message("openMessage","Abrindo comanda...",false);
-    const {data,error}=await db.rpc("open_comanda",{p_customer_name:name.trim()});
+    const {data,error}=await db.rpc("open_comanda_public",{p_customer_name:name.trim()});
     if(error)throw error;
     const row=Array.isArray(data)?data[0]:data;
     if(!row?.comanda_id)throw new Error("Não foi possível criar a comanda.");
