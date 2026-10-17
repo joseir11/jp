@@ -115,6 +115,8 @@
       .subscribe();
   }
 
+  $("refreshComandasButton").addEventListener("click",refreshOpenComandas);
+
   $("openForm").addEventListener("submit",async event=>{
     event.preventDefault();
     const button=event.submitter;
