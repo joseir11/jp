@@ -22,8 +22,8 @@ function productsForCategory(){
   return window.MENU.filter(p=>activeCategory==="todos"||p.category===activeCategory);
 }
 function renderCategories(list){
-  categories.innerHTML='<button class="category active" data-category="todos">TODOS</button>'+
-    list.filter(c=>c.active).map(c=>`<button class="category" data-category="${escapeHTML(c.slug)}">${escapeHTML(c.name)}</button>`).join("");
+  categories.innerHTML='<button class="category '+(activeCategory==="todos"?"active":"")+'" data-category="todos">TODOS</button>'+
+    list.filter(c=>c.active).map(c=>`<button class="category ${activeCategory===c.slug?"active":""}" data-category="${escapeHTML(c.slug)}">${escapeHTML(c.name)}</button>`).join("");
 }
 function renderProducts(direction="next",animate=false){
   const products=productsForCategory();
@@ -93,6 +93,11 @@ async function loadMenu(){
     if(prodRes.error)throw prodRes.error;
     const cats=(catRes.data||[]).filter(c=>c.active);
     const rows=(prodRes.data||[]).filter(p=>p.active);
+    const sandwiches=cats.find(c=>
+      String(c.slug||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase()==="sanduiches" ||
+      String(c.name||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase()==="sanduiches"
+    );
+    activeCategory=sandwiches?sandwiches.slug:"todos";
     renderCategories(cats);
     window.MENU=rows.map(p=>({
       id:p.id,
