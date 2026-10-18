@@ -93,9 +93,14 @@ async function loadMenu(){
     if(prodRes.error)throw prodRes.error;
     const cats=(catRes.data||[]).filter(c=>c.active);
     const rows=(prodRes.data||[]).filter(p=>p.active);
+    const normalizeCategory=value=>String(value||"")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .trim()
+      .toLowerCase();
     const sandwiches=cats.find(c=>
-      String(c.slug||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase()==="sanduiches" ||
-      String(c.name||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase()==="sanduiches"
+      normalizeCategory(c.slug)==="sanduiches" ||
+      normalizeCategory(c.name)==="sanduiches"
     );
     activeCategory=sandwiches?sandwiches.slug:"todos";
     renderCategories(cats);
