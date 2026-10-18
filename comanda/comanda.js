@@ -93,7 +93,7 @@
     const panel=$("productionCoupon");
     if(!coupon||!Array.isArray(coupon.items)||!coupon.items.length){panel.hidden=true;return;}
     const lines=[
-      "🍔 JP BURGUER","CUPOM DE PRODUÇÃO","━━━━━━━━━━━━━━━━━━",
+      "🍔 JP BURGUER","━━━━━━━━━━━━━━━━━━",
       "COMANDA: #"+String(coupon.comanda_number).padStart(3,"0"),
       "CLIENTE: "+coupon.customer_name,
       "PEDIDO: #"+String(coupon.order_number).padStart(3,"0"),
