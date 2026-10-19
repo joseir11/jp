@@ -1152,3 +1152,79 @@ body{padding-bottom:104px}
     transition:none!important;
   }
 }
+
+
+/* BOTAO CARDAPIO — DESTAQUE LARANJA SEM FUNDO */
+.landing-menu-button{
+  top:72%!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:auto!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:12px 4px 15px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  backdrop-filter:none!important;
+  color:#f47721!important;
+  font-family:var(--display)!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  letter-spacing:2px!important;
+  line-height:1.15!important;
+  text-shadow:0 0 9px rgba(244,119,33,.28),0 0 22px rgba(244,119,33,.16)!important;
+  box-shadow:none!important;
+  opacity:0!important;
+  transform:translate(calc(50vw + 50%),-50%)!important;
+  animation:jpCardapioSlideIn .9s cubic-bezier(.18,.75,.22,1) .55s forwards!important;
+  transition:color .25s ease,text-shadow .25s ease!important;
+}
+.landing-menu-button::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:3px;
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,#d96a2c,#ffad70);
+  box-shadow:0 0 10px rgba(244,119,33,.42);
+  transform:scaleX(0);
+  transform-origin:center;
+  animation:jpCardapioUnderline .45s ease 1.25s forwards;
+}
+.landing-menu-button:hover,
+.landing-menu-button:focus-visible{
+  color:#ff9a50!important;
+  background:transparent!important;
+  text-shadow:0 0 12px rgba(244,119,33,.48),0 0 28px rgba(244,119,33,.25)!important;
+  outline:none!important;
+}
+@keyframes jpCardapioSlideIn{
+  from{opacity:0;transform:translate(calc(50vw + 50%),-50%)}
+  to{opacity:1;transform:translate(-50%,-50%)}
+}
+@keyframes jpCardapioUnderline{
+  to{transform:scaleX(1)}
+}
+@media(max-width:600px){
+  .landing-menu-button{
+    top:72%!important;
+    left:50%!important;
+    font-size:24px!important;
+    letter-spacing:1.8px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .landing-menu-button{
+    opacity:1!important;
+    transform:translate(-50%,-50%)!important;
+    animation:none!important;
+  }
+  .landing-menu-button::after{
+    transform:scaleX(1);
+    animation:none!important;
+  }
+}
