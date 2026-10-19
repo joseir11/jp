@@ -1,8 +1,11 @@
 const landingScreen=document.getElementById("landingScreen");
 const menuApp=document.getElementById("menuApp");
+let menuIsVisible=false;
 document.getElementById("enterMenu").addEventListener("click",()=>{
   landingScreen.hidden=true;
   menuApp.hidden=false;
+  menuIsVisible=true;
+  renderProducts("next",false,true);
   window.scrollTo({top:0,behavior:"instant"});
 });
 
@@ -25,7 +28,7 @@ function renderCategories(list){
   categories.innerHTML='<button class="category '+(activeCategory==="todos"?"active":"")+'" data-category="todos">TODOS</button>'+
     list.filter(c=>c.active).map(c=>`<button class="category ${activeCategory===c.slug?"active":""}" data-category="${escapeHTML(c.slug)}">${escapeHTML(c.name)}</button>`).join("");
 }
-function renderProducts(direction="next",animate=false){
+function renderProducts(direction="next",animate=false,animateDetails=false){
   const products=productsForCategory();
   if(!products.length){
     productGrid.innerHTML='<p class="menu-loading">NENHUM PRODUTO DISPONÍVEL NESTA CATEGORIA.</p>';
@@ -44,7 +47,7 @@ function renderProducts(direction="next",animate=false){
         </div>
         <button class="showcase-arrow showcase-next" type="button" data-slide="next" aria-label="Próximo produto" ${multiple?"":"disabled"}>›</button>
       </div>
-      <div class="showcase-details">
+      <div class="showcase-details${animateDetails?" details-enter":""}">
         <span class="showcase-label">${escapeHTML(p.label||"JP HOUSE")}</span>
         <h2>${escapeHTML(p.name)}</h2>
         <p>${escapeHTML(p.description||"")}</p>
@@ -75,7 +78,7 @@ categories.addEventListener("click",event=>{
   categories.querySelectorAll(".category").forEach(item=>item.classList.toggle("active",item===button));
   activeCategory=button.dataset.category;
   currentProductIndex=0;
-  renderProducts();
+  renderProducts("next",false,true);
 });
 productGrid.addEventListener("click",event=>{
   const arrow=event.target.closest("[data-slide]");
@@ -114,7 +117,7 @@ async function loadMenu(){
       category:p.categories?.slug||""
     }));
     currentProductIndex=0;
-    renderProducts();
+    renderProducts("next",false,menuIsVisible);
   }catch(error){
     console.error("Falha ao carregar cardápio:",error);
     productGrid.innerHTML='<p class="menu-loading">NÃO FOI POSSÍVEL CARREGAR OS PRODUTOS. VERIFIQUE A CONEXÃO E TENTE NOVAMENTE.</p>';
