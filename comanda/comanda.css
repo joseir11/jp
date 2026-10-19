@@ -26,3 +26,107 @@ footer{display:flex;justify-content:space-between;padding:25px 0 10px;color:#786
 .production-coupon pre{max-height:230px;overflow:auto;margin:0 0 12px;padding:12px;border-radius:8px;background:#100b08;color:#fff7f0;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
 .whatsapp-button{width:100%;min-height:45px;border:0;border-radius:9px;background:#25d366;color:#082b16;font-size:10px;font-weight:900;letter-spacing:.4px}
 .production-coupon>small{display:block;margin-top:8px;color:#c1d7c7;font-size:9px;line-height:1.5}
+
+
+/* JP BURGUER — interface clara e visual para comandas */
+:root{
+  color-scheme:light;
+  --bg:#f5f5f3;--panel:#ffffff;--panel2:#fafafa;
+  --line:#e7e7e4;--text:#171717;--muted:#77736f;
+  --orange:#f47721;--orange2:#df6415;--green:#159447;
+}
+body{background:#f5f5f3;color:#171717}
+.header{border-bottom-color:#e7e7e4}
+.header-label,.eyebrow{color:#e96e1c}
+.open-screen,.catalog,.draft-card,.history-card,.open-comandas-card{
+  background:#fff;border:1px solid #e8e6e3;
+  box-shadow:0 5px 22px rgba(25,20,16,.045)
+}
+.open-screen{margin-top:clamp(35px,8vh,85px)}
+.open-screen h1,.comanda-heading h1,.section-heading h2,.open-comandas-card h2{color:#171717}
+.open-screen>p,.comanda-heading p{color:#68635e}
+.open-form label,.note-label{color:#514b46}
+.open-form input,.draft-card textarea{
+  background:#faf9f7;color:#171717;border:1px solid #dedbd7
+}
+.open-form input:focus,.draft-card textarea:focus{border-color:#f47721}
+.primary{background:#f47721;color:#fff;min-height:52px;font-size:13px}
+.primary:hover{background:#e96b17}
+.ghost{border-color:#dedbd7;color:#34302c;background:#fff}
+.ghost:hover{border-color:#f47721;color:#d96112}
+.catalog,.draft-card,.history-card{border-radius:15px}
+.section-heading h2{font-size:24px}
+.muted,.empty{color:#77736f}
+.filters{gap:9px;padding:13px 0}
+.filter{background:#f6f5f3;border-color:#e5e1dc;color:#514b46;font-size:11px;padding:10px 15px}
+.filter.active{background:#f47721;border-color:#f47721;color:#fff}
+.product-list{gap:12px}
+.product-card{background:#fff;border:1px solid #ece9e5;border-radius:12px;padding:11px;align-items:center}
+.product-card img,.product-placeholder{width:82px;height:82px;flex-basis:82px;background:#f3f0ed}
+.product-info strong{font-size:13px;color:#191919;line-height:1.35}
+.product-info small{font-size:15px;font-weight:900;color:#e96e1c;margin:5px 0}
+.add-button{
+  margin-top:auto;align-self:flex-end;
+  width:42px;height:38px;padding:0;border:0;border-radius:8px;
+  background:transparent;color:#159447;font-size:0;font-weight:900;
+}
+.add-button::first-letter{font-size:0}
+.add-button::after{content:"+";font-size:34px;line-height:1;color:#159447}
+.add-button:hover{background:#eaf6ee}
+.count{width:29px;height:29px;border-radius:9px;background:#fff0e5;color:#df6415;font-size:13px}
+.draft-name{font-size:13px;color:#191919}
+.draft-price{font-size:11px;color:#77736f}
+.draft-row{padding:12px 0;border-bottom-color:#eeeae6;align-items:center}
+.qty-controls{gap:9px}
+.qty-controls button,.saved-item-controls button{
+  width:auto;height:auto;min-width:28px;min-height:36px;
+  padding:0 3px;border:0;border-radius:0;background:transparent;
+  font-size:30px;line-height:1;font-weight:800;
+}
+.qty-controls button[data-dec],.saved-item-controls button[data-item-dec]{color:#dc3838}
+.qty-controls button[data-inc],.saved-item-controls button[data-item-inc]{color:#159447}
+.qty-controls button.remove,.saved-item-controls button.saved-item-remove{
+  min-width:25px;min-height:30px;color:#888;font-size:21px
+}
+.qty-controls b,.saved-item-controls b{font-size:14px;color:#171717;min-width:14px;text-align:center}
+.draft-total,.grand-total{border-top-color:#e9e5e1;color:#55504b;font-size:12px}
+.draft-total strong{color:#e96e1c;font-size:21px;font-weight:900}
+.grand-total strong{color:#e96e1c;font-size:24px;font-weight:900}
+.draft-card textarea{font-size:12px}
+.order-history{border-bottom-color:#eeeae6}
+.order-history-head{font-size:12px;color:#24211e}
+.order-history-head strong{color:#e96e1c;font-size:14px}
+.order-history small{color:#77736f}
+.order-history-line{color:#514b46;align-items:center}
+.saved-item-controls{gap:7px}
+.saved-item-controls strong{color:#e96e1c;font-size:12px}
+.finish-button{background:#fff3e9;color:#d96112;border:1px solid #f3c5a4;min-height:52px;font-size:12px}
+.closed-notice{background:#edf8f0;color:#18743b;border-color:#cce8d4}
+.open-comanda-row{border-top-color:#eeeae6}
+.open-comanda-select{color:#171717}
+.open-comanda-name{color:#d96112;font-size:15px}
+.open-comanda-number{color:#77736f;font-size:11px}
+.open-comanda-select>strong{color:#e96e1c;font-size:16px}
+.delete-comanda{border-color:#f1d0c9;color:#c43e32;background:#fff8f6;font-size:10px}
+.production-coupon{background:#f0faf3;border-color:#cce8d4}
+.production-coupon h3{color:#171717}
+.production-coupon pre{background:#fff;color:#262626;border:1px solid #dce9df}
+.production-coupon>small{color:#52685a}
+.whatsapp-button{min-height:50px;font-size:12px}
+.message{color:#bd5519}
+footer{color:#8b8580}
+footer a{color:#d96112}
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(244,119,33,.28);outline-offset:2px
+}
+@media(max-width:600px){
+  .product-card img,.product-placeholder{width:76px;height:76px;flex-basis:76px}
+  .product-info strong{font-size:13px}
+  .product-info small{font-size:16px}
+  .add-button{width:44px;height:42px}
+  .qty-controls button,.saved-item-controls button{font-size:32px;min-height:40px}
+  .draft-name{font-size:13px}
+  .draft-total strong{font-size:22px}
+  .grand-total strong{font-size:25px}
+  .open-comanda-select{padding:10px 5px}
+}
