@@ -130,3 +130,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   .grand-total strong{font-size:25px}
   .open-comanda-select{padding:10px 5px}
 }
+
+
+/* Padroniza toda a interface da comanda em letras maiúsculas */
+.comanda-screen,.comanda-screen *,
+.open-screen,.open-screen *,
+.open-comandas-card,.open-comandas-card *,
+.header-label,footer{
+  text-transform:uppercase;
+}
