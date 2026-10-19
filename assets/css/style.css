@@ -1104,3 +1104,51 @@ body{padding-bottom:104px}
     height:104px!important;
   }
 }
+
+
+/* ANIMACOES DISCRETAS — ENTRADA DOS DETALHES E CATEGORIA ATIVA */
+.menu-app .showcase-details.details-enter h2,
+.menu-app .showcase-details.details-enter p{
+  opacity:0;
+  animation:jpDetailsRise .48s cubic-bezier(.2,.7,.25,1) forwards;
+}
+.menu-app .showcase-details.details-enter p{
+  animation-delay:.08s;
+}
+@keyframes jpDetailsRise{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.menu-app #categories .category{
+  position:relative;
+  transition:color .24s ease,text-shadow .24s ease,transform .2s ease;
+}
+.menu-app #categories .category::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-3px;
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,#d96a2c,#ffad70);
+  box-shadow:0 0 9px rgba(241,138,73,.28);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .26s cubic-bezier(.2,.7,.25,1);
+}
+.menu-app #categories .category.active::after{
+  transform:scaleX(1);
+}
+@media(prefers-reduced-motion:reduce){
+  .menu-app .showcase-details.details-enter h2,
+  .menu-app .showcase-details.details-enter p{
+    animation:none!important;
+    opacity:1!important;
+    transform:none!important;
+  }
+  .menu-app #categories .category,
+  .menu-app #categories .category::after{
+    transition:none!important;
+  }
+}
