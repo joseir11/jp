@@ -1159,7 +1159,7 @@ body{padding-bottom:104px}
   top:auto!important;
   left:50%!important;
   right:auto!important;
-  bottom:clamp(18px,3.5vw,34px)!important;
+  bottom:clamp(12px,3vw,28px)!important;
   display:inline-flex!important;
   align-items:center!important;
   justify-content:center!important;
@@ -1212,7 +1212,7 @@ body{padding-bottom:104px}
 @media(max-width:600px){
   .landing-menu-button{
     top:auto!important;
-    bottom:18px!important;
+    bottom:12px!important;
     left:50%!important;
     font-size:24px!important;
     letter-spacing:1.8px!important;
