@@ -1176,8 +1176,8 @@ body{padding-bottom:104px}
   line-height:1.15!important;
   text-shadow:0 0 9px rgba(244,119,33,.28),0 0 22px rgba(244,119,33,.16)!important;
   box-shadow:none!important;
-  opacity:0!important;
-  transform:translate(calc(50vw + 50%),-50%)!important;
+  opacity:0;
+  transform:translate(calc(50vw + 50%),-50%);
   animation:jpCardapioSlideIn .9s cubic-bezier(.18,.75,.22,1) .55s forwards!important;
   transition:color .25s ease,text-shadow .25s ease!important;
 }
