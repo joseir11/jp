@@ -134,11 +134,11 @@
       "━━━━━━━━━━━━━━━━━━━━",
       "Obrigado pela preferência!"
     ];
-    $("finalCouponText").textContent=lines.join("\\n");
+    $("finalCouponText").textContent=lines.join("\n");
     $("sendFinalCouponButton").onclick=()=>{
       const phone=String(comanda.customer_phone||"").replace(/[^0-9]/g,"");
       if(!phone){alert("Esta comanda não possui telefone cadastrado.");return;}
-      const text=lines.join("\\n");
+      const text=lines.join("\n");
       window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(text),"_blank","noopener,noreferrer");
     };
   }
