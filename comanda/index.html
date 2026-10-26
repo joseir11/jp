@@ -26,7 +26,7 @@
         <label for="customerName">NOME DO CLIENTE</label>
         <input id="customerName" type="text" maxlength="100" minlength="2" placeholder="Ex.: João" autocomplete="off" required>
         <label for="customerPhone">CELULAR (9 DÍGITOS)</label>
-        <input id="customerPhone" type="tel" inputmode="tel" maxlength="15" minlength="13" value="+5562" placeholder="+5562..." autocomplete="tel" pattern="\+5562[0-9]{8,9}" title="Informe o telefone com DDD 62." required>
+        <input id="customerPhone" type="tel" inputmode="numeric" maxlength="9" minlength="9" placeholder="99999-9999" autocomplete="tel" pattern="[0-9]{9}" title="Informe os 9 dígitos do celular." required>
         <button class="primary" type="submit">ABRIR COMANDA <span>→</span></button>
       </form>
       <div id="openMessage" class="message" role="status"></div>
