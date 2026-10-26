@@ -129,7 +129,7 @@
       "━━━━━━━━━━━━━━━━━━━━",
       "SUBTOTAL: "+money(comanda.total),
       "TAXA DE SERVIÇO"+(comanda.service_fee_enabled?" (10%)":" (NÃO APLICADA)")+": "+money(comanda.service_fee),
-      "TOTAL FINAL PARA PAGAMENTO: "+money(comanda.final_total??comanda.total),
+      "TOTAL A PAGAR: "+money(comanda.final_total??comanda.total),
       "━━━━━━━━━━━━━━━━━━━━",
       "Obrigado pela preferência!"
     ];
