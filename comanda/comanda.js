@@ -116,7 +116,6 @@
     const lines=[
       "🍔 JP BURGUER",
       "━━━━━━━━━━━━━━━━━━━━",
-      "COMANDA FINALIZADA PARA PAGAMENTO",
       "COMANDA: #"+String(comanda.comanda_number).padStart(3,"0"),
       "CLIENTE: "+comanda.customer_name,
       "━━━━━━━━━━━━━━━━━━━━",
