@@ -44,7 +44,7 @@
 
   async function openComanda(name,phone){
     message("openMessage","Abrindo comanda...",false);
-    const normalizedPhone=phone.replace(/\\D/g,"");
+    const normalizedPhone=phone.replace(/[^0-9]/g,"");
     const {data,error}=await db.rpc("open_comanda_public",{p_customer_name:name.trim().toLocaleUpperCase("pt-BR"),p_customer_phone:normalizedPhone});
     if(error)throw error;
     const row=Array.isArray(data)?data[0]:data;
@@ -136,7 +136,7 @@
     ];
     $("finalCouponText").textContent=lines.join("\\n");
     $("sendFinalCouponButton").onclick=()=>{
-      const phone=String(comanda.customer_phone||"").replace(/\\D/g,"");
+      const phone=String(comanda.customer_phone||"").replace(/[^0-9]/g,"");
       if(!phone){alert("Esta comanda não possui telefone cadastrado.");return;}
       const text=lines.join("\\n");
       window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(text),"_blank","noopener,noreferrer");
@@ -146,7 +146,7 @@
   function renderComanda(){
     if(!comanda)return;
     $("comandaTitle").innerHTML='COMANDA <span>#'+String(comanda.comanda_number).padStart(3,"0")+'</span>';
-    $("customerLabel").textContent=comanda.customer_name+" · "+(comanda.customer_phone?"+"+comanda.customer_phone:"");
+    $("customerLabel").textContent=comanda.customer_name;
     const closed=comanda.status!=="ABERTA";
     const feeToggle=$("serviceFeeToggle");
     if(feeToggle){feeToggle.checked=closed?Boolean(comanda.service_fee_enabled):feeToggle.checked;feeToggle.disabled=closed;}
@@ -190,9 +190,8 @@
   $("refreshComandasButton").addEventListener("click",refreshOpenComandas);
 
   $("customerPhone").addEventListener("input",event=>{
-    let digits=event.target.value.replace(/\\D/g,"");
-    if(!digits.startsWith("5562"))digits="5562"+digits.replace(/^5562/,"");
-    event.target.value="+"+digits.slice(0,13);
+    let digits=event.target.value.replace(/[^0-9]/g,"").slice(0,9);
+    event.target.value=digits;
   });
 
   $("openForm").addEventListener("submit",async event=>{
