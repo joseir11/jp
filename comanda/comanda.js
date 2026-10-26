@@ -42,9 +42,10 @@
     await loadComanda();subscribe();
   }
 
-  async function openComanda(name){
+  async function openComanda(name,phone){
     message("openMessage","Abrindo comanda...",false);
-    const {data,error}=await db.rpc("open_comanda_public",{p_customer_name:name.trim().toLocaleUpperCase("pt-BR")});
+    const normalizedPhone=phone.replace(/\\D/g,"");
+    const {data,error}=await db.rpc("open_comanda_public",{p_customer_name:name.trim().toLocaleUpperCase("pt-BR"),p_customer_phone:normalizedPhone});
     if(error)throw error;
     const row=Array.isArray(data)?data[0]:data;
     if(!row?.comanda_id)throw new Error("Não foi possível criar a comanda.");
@@ -109,10 +110,43 @@
     panel.hidden=false;
   }
 
+  function renderFinalCoupon(){
+    if(!comanda||comanda.status==="ABERTA")return;
+    const orders=Array.isArray(comanda.orders)?comanda.orders:[];
+    const lines=[
+      "🍔 JP BURGUER",
+      "━━━━━━━━━━━━━━━━━━━━",
+      "COMANDA FINALIZADA PARA PAGAMENTO",
+      "COMANDA: #"+String(comanda.comanda_number).padStart(3,"0"),
+      "CLIENTE: "+comanda.customer_name,
+      "━━━━━━━━━━━━━━━━━━━━",
+      ...orders.flatMap(order=>[
+        "PEDIDO #"+String(order.order_number).padStart(3,"0"),
+        ...(order.items||[]).map(item=>Number(item.quantity)+"x "+item.product_name+" — "+money(item.subtotal)),
+        ...(order.notes?["OBS.: "+order.notes]:[]),
+        "SUBTOTAL DO PEDIDO: "+money(order.total),
+        ""
+      ]),
+      "━━━━━━━━━━━━━━━━━━━━",
+      "SUBTOTAL: "+money(comanda.total),
+      "TAXA DE SERVIÇO"+(comanda.service_fee_enabled?" (10%)":" (NÃO APLICADA)")+": "+money(comanda.service_fee),
+      "TOTAL FINAL PARA PAGAMENTO: "+money(comanda.final_total??comanda.total),
+      "━━━━━━━━━━━━━━━━━━━━",
+      "Obrigado pela preferência!"
+    ];
+    $("finalCouponText").textContent=lines.join("\\n");
+    $("sendFinalCouponButton").onclick=()=>{
+      const phone=String(comanda.customer_phone||"").replace(/\\D/g,"");
+      if(!phone){alert("Esta comanda não possui telefone cadastrado.");return;}
+      const text=lines.join("\\n");
+      window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(text),"_blank","noopener,noreferrer");
+    };
+  }
+
   function renderComanda(){
     if(!comanda)return;
     $("comandaTitle").innerHTML='COMANDA <span>#'+String(comanda.comanda_number).padStart(3,"0")+'</span>';
-    $("customerLabel").textContent=comanda.customer_name;
+    $("customerLabel").textContent=comanda.customer_name+" · "+(comanda.customer_phone?"+"+comanda.customer_phone:"");
     const closed=comanda.status!=="ABERTA";
     const feeToggle=$("serviceFeeToggle");
     if(feeToggle){feeToggle.checked=closed?Boolean(comanda.service_fee_enabled):feeToggle.checked;feeToggle.disabled=closed;}
@@ -130,6 +164,8 @@
     $("closedNotice").hidden=!closed;
     $("closeComandaButton").disabled=closed;
     $("closeComandaButton").textContent=closed?"COMANDA FECHADA":"FECHAR COMANDA";
+    $("finalCouponPanel").hidden=!closed;
+    if(closed)renderFinalCoupon();
     $("sendOrderButton").disabled=closed||draft.size===0||busy;
     document.querySelectorAll(".catalog button,.draft-card button,.draft-card textarea").forEach(el=>{if(el.id!=="newComandaButton")el.disabled=closed;});
   }
@@ -153,11 +189,17 @@
 
   $("refreshComandasButton").addEventListener("click",refreshOpenComandas);
 
+  $("customerPhone").addEventListener("input",event=>{
+    let digits=event.target.value.replace(/\\D/g,"");
+    if(!digits.startsWith("5562"))digits="5562"+digits.replace(/^5562/,"");
+    event.target.value="+"+digits.slice(0,13);
+  });
+
   $("openForm").addEventListener("submit",async event=>{
     event.preventDefault();
     const button=event.submitter;
     button.disabled=true;
-    try{await openComanda($("customerName").value);message("openMessage","Comanda aberta!",false);}
+    try{await openComanda($("customerName").value,$("customerPhone").value);message("openMessage","Comanda aberta!",false);}
     catch(error){message("openMessage",error.message||"Erro ao abrir comanda.");}
     finally{button.disabled=false;}
   });
