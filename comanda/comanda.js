@@ -113,13 +113,20 @@
     if(!comanda)return;
     $("comandaTitle").innerHTML='COMANDA <span>#'+String(comanda.comanda_number).padStart(3,"0")+'</span>';
     $("customerLabel").textContent=comanda.customer_name;
-    $("grandTotal").textContent=money(comanda.total);
+    const closed=comanda.status!=="ABERTA";
+    const feeToggle=$("serviceFeeToggle");
+    if(feeToggle){feeToggle.checked=closed?Boolean(comanda.service_fee_enabled):feeToggle.checked;feeToggle.disabled=closed;}
+    const feeEnabled=feeToggle?feeToggle.checked:true;
+    const serviceFee=closed?Number(comanda.service_fee||0):(feeEnabled?Math.round((Number(comanda.total)||0)*10)/100:0);
+    const finalTotal=closed?Number(comanda.final_total??comanda.total):Number(comanda.total||0)+serviceFee;
+    $("serviceFeeValue").textContent=money(serviceFee);
+    $("grandTotal").textContent=money(finalTotal);
+    $("serviceFeeOption").hidden=closed;
     const orders=Array.isArray(comanda.orders)?comanda.orders:[];
     $("orderCount").textContent=orders.length+" pedido(s)";
     $("ordersList").innerHTML=orders.length?orders.map(order=>'<article class="order-history"><div class="order-history-head"><span>PEDIDO #'+String(order.order_number).padStart(3,"0")+'</span><strong>'+money(order.total)+'</strong></div><small>'+new Date(order.created_at).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})+'</small>'+
       (order.items||[]).map(item=>'<div class="order-history-line"><span>'+safe(item.product_name)+'</span><div class="saved-item-controls"><button type="button" data-item-dec="'+item.item_id+'" data-qty="'+item.quantity+'" aria-label="Diminuir">−</button><b>'+Number(item.quantity)+'×</b><button type="button" data-item-inc="'+item.item_id+'" data-qty="'+item.quantity+'" aria-label="Aumentar">+</button><strong>'+money(item.subtotal)+'</strong><button type="button" class="saved-item-remove" data-item-delete="'+item.item_id+'" aria-label="Excluir item">×</button></div></div>').join("")+
       (order.notes?'<small>OBS.: '+safe(order.notes)+'</small>':"")+'</article>').join(""):'<p class="empty">Nenhum pedido lançado.</p>';
-    const closed=comanda.status!=="ABERTA";
     $("closedNotice").hidden=!closed;
     $("closeComandaButton").disabled=closed;
     $("closeComandaButton").textContent=closed?"COMANDA FECHADA":"FECHAR COMANDA";
@@ -232,12 +239,16 @@
     finally{busy=false;renderDraft();renderComanda();}
   });
 
+  $("serviceFeeToggle").addEventListener("change",()=>renderComanda());
+
   $("closeComandaButton").addEventListener("click",async()=>{
     if(!comandaId||comanda?.status!=="ABERTA")return;
-    if(!confirm("Deseja realmente fechar esta comanda? Depois disso, não será possível adicionar novos pedidos."))return;
+    const includeFee=$("serviceFeeToggle").checked;
+    const feeText=includeFee?" com taxa de serviço de 10%":" sem taxa de serviço";
+    if(!confirm("Deseja realmente fechar esta comanda"+feeText+"? Depois disso, não será possível adicionar novos pedidos."))return;
     const button=$("closeComandaButton");button.disabled=true;
     try{
-      const {error}=await db.rpc("close_comanda_public",{p_comanda_id:comandaId});
+      const {error}=await db.rpc("close_comanda_public",{p_comanda_id:comandaId,p_include_service_fee:includeFee});
       if(error)throw error;
       await loadComanda();
       refreshOpenComandas();
