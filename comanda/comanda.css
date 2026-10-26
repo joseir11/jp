@@ -139,3 +139,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .header-label,footer{
   text-transform:uppercase;
 }
+
+
+.service-fee-option{padding:12px 0 8px;border-top:1px solid #e9e5e1}
+.service-fee-option label{display:flex;align-items:center;gap:10px;color:#292522;font-size:12px;font-weight:800;cursor:pointer}
+.service-fee-option input{width:21px;height:21px;accent-color:#159447;cursor:pointer}
+.service-fee-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;color:#55504b;font-size:12px;font-weight:800}
+.service-fee-row strong{color:#159447;font-size:16px;font-weight:900}
+.service-fee-option[hidden]{display:none!important}
