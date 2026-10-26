@@ -147,3 +147,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .service-fee-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;color:#55504b;font-size:12px;font-weight:800}
 .service-fee-row strong{color:#159447;font-size:16px;font-weight:900}
 .service-fee-option[hidden]{display:none!important}
+
+.final-coupon{margin-top:15px;padding:14px;border:1px solid #cce8d4;border-radius:12px;background:#f0faf3}
+.final-coupon h3{margin:5px 0 10px;font:22px Anton,sans-serif;color:#171717}
+.final-coupon pre{max-height:320px;overflow:auto;margin:0 0 12px;padding:12px;border:1px solid #dce9df;border-radius:8px;background:#fff;color:#262626;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.final-coupon>small{display:block;margin-top:8px;color:#52685a;font-size:9px;line-height:1.5}
+.final-coupon[hidden]{display:none!important}
