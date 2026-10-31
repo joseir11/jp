@@ -1229,3 +1229,48 @@ body{padding-bottom:104px}
     animation:none!important;
   }
 }
+
+/* LOGO DA TELA INICIAL — MENOR, À ESQUERDA E COM LEVE TRANSPARÊNCIA */
+.landing-comanda-link{
+  position:absolute!important;
+  z-index:4!important;
+  top:clamp(16px,3.5vh,38px)!important;
+  left:clamp(20px,4vw,48px)!important;
+  display:block!important;
+  width:min(24vw,200px)!important;
+  height:auto!important;
+  line-height:0!important;
+}
+.landing-comanda-link .landing-logo{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  max-height:20svh!important;
+  height:auto!important;
+  opacity:.88!important;
+  transform:translateY(10px) scale(.98)!important;
+  animation:jpLandingLogoLeftEnter 1s cubic-bezier(.2,.7,.2,1) .12s forwards!important;
+}
+@keyframes jpLandingLogoLeftEnter{
+  to{opacity:.88;transform:translateY(0) scale(1)}
+}
+@media(max-width:600px){
+  .landing-comanda-link{
+    top:20px!important;
+    left:23px!important;
+    width:min(30.4vw,136px)!important;
+  }
+  .landing-comanda-link .landing-logo{
+    max-height:16svh!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .landing-comanda-link .landing-logo{
+    animation:none!important;
+    opacity:.88!important;
+    transform:none!important;
+  }
+}
